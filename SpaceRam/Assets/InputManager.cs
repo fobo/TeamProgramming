@@ -46,14 +46,16 @@ public class InputManager : MonoBehaviour
         }
 
         Camera camera = Camera.main;
-        float topBoundary = (camera.transform.position.y - camera.orthographicSize);
-        float bottomBoundary = (camera.transform.position.y + camera.orthographicSize);
+        float topBoundary = 5;
+        float bottomBoundary = -5;
+        float padding = 0f; //in case a bug starts happening where the ship gets stuck in the boundaries and starts vibrating, increase this value
 
-        if (transform.position.y < topBoundary || 
-            transform.position.y > bottomBoundary) {
+        if (transform.position.y > topBoundary || 
+            transform.position.y < bottomBoundary) {
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z*-1);
-            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, topBoundary, bottomBoundary));
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * -1);
+            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary + padding, topBoundary - padding),0);
+            
         }
     }
 }
