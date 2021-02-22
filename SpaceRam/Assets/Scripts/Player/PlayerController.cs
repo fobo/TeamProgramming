@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log("test");
+    }
+
     private void FixedUpdate()
     {
         
