@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &87158810 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4137803063491501375, guid: 5212534ca9bbd174b830a2c39a5f8676, type: 3}
-  m_PrefabInstance: {fileID: 4137803064137378725}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &277960227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -423,7 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   min_Y: -4.3
   max_Y: 4.3
-  enemy_turretship_small: {fileID: 87158810}
+  enemy_turretship_small: {fileID: 4137803063491501375, guid: 5212534ca9bbd174b830a2c39a5f8676, type: 3}
   interval: 2
 --- !u!4 &811403143
 Transform:
