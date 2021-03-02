@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
    // public float interval = 100;
    // private float counter = 0;
 
-    public GameObject[] enemy_turretship_small;
+    public GameObject enemy_turretship_small;
 
    
     [SerializeField] private float interval = 2f;
