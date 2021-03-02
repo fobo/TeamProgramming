@@ -8,7 +8,9 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickPoint;
     float rotationSpeed;
-    float dashPower = 1000;
+    float maxDashPower = 1000;
+    float curDashPower = 0;
+    Animator anim;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -17,11 +19,13 @@ public class PlayerController : MonoBehaviour
         clickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         rotationSpeed = 1440;
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        //anim.speed = 0f;
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("test");
+        //Debug.Log("test");
     }
 
     private void FixedUpdate()
@@ -34,6 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         clickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+
+
         if (Input.GetMouseButton(0))
         {
             var step = rotationSpeed * Time.deltaTime;
@@ -42,7 +48,13 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationGoal, step);
             rb.velocity -= (rb.velocity*4) * Time.deltaTime;
             rb.angularVelocity = 0;
+
+            curDashPower = Mathf.Clamp(curDashPower+ (maxDashPower*Time.deltaTime), maxDashPower/4, maxDashPower);
+        
         }
+
+        Debug.Log(Mathf.Round((curDashPower / maxDashPower)));
+        anim.Play("ram_ship", 0, (curDashPower / maxDashPower)*.999f); ; ; ; ; ; ;
 
         if (Input.GetMouseButton(1))
         {
@@ -54,7 +66,8 @@ public class PlayerController : MonoBehaviour
             //Debug.Log(transform.forward * dashPower);
             transform.rotation = Quaternion.LookRotation(Vector3.forward, clickPoint - transform.position);
             rb.velocity = Vector2.zero;
-            rb.AddForce(transform.up * dashPower);
+            rb.AddForce(transform.up * curDashPower);
+            curDashPower = 0;
         }
 
         Camera camera = Camera.main;
