@@ -34,7 +34,7 @@ public class ShootingController : MonoBehaviour
         }
     }
 
-    void FireProjectile()
+    GameObject aquireTarget()
     {
         GameObject[] possibleTargets = GameObject.FindGameObjectsWithTag("Player");
         GameObject closest = possibleTargets[0];
@@ -47,6 +47,14 @@ public class ShootingController : MonoBehaviour
                 closest = target;
             }
         }
+
+        return closest;
+    }
+
+
+    void FireProjectile()
+    {
+        GameObject closest = aquireTarget();
 
         Vector2 targetPos = closest.transform.position;
         direction = targetPos - (Vector2)transform.position;
