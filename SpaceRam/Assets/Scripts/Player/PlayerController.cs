@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-
     Vector3 clickPoint;
     float rotationSpeed;
     float maxDashPower = 1000;
     float curDashPower = 0;
     Animator anim;
     Rigidbody2D rb;
+    public float hp = 100;
+    public float max_hp = 100;
 
     // Start is called before the first frame update
     void Start()

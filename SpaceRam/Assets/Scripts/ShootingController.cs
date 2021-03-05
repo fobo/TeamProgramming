@@ -11,12 +11,13 @@ public class ShootingController : MonoBehaviour
     private Vector2 direction;
     private float current_delay;
     public float Force = 100;
+    private EnemyController parentController;
 
     // Start is called before the first frame update
     void Start()
     {
         current_delay = frequency_seconds;
-        
+        parentController = gameObject.GetComponentInParent<EnemyController>();
     }
 
     
@@ -24,7 +25,10 @@ public class ShootingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (parentController.stunTime > 0)
+        {
+            return;
+        }
 
         current_delay -= Time.deltaTime;
         if (current_delay <= 0)
