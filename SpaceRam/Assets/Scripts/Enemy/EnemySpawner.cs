@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public float spawnDistance = 1f;
     public float min_Y = -4.3f, max_Y = 4.3f;
    // public float interval = 100;
    // private float counter = 0;
@@ -33,10 +34,16 @@ public class EnemySpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        Vector3 offset = Random.onUnitSphere;
+
+        offset.z = 0;
+
+        offset = offset.normalized * spawnDistance;
+
         if (timer >= interval)
         {
             timer = 0f;
-            Instantiate(enemy_turretship_small, transform.position, transform.rotation);
+            Instantiate(enemy_turretship_small, transform.position + offset, transform.rotation);
         }
     }
     /*  void FixedUpdate()

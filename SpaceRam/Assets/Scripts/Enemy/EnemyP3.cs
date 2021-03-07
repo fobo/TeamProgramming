@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraBehaviors : MonoBehaviour
+public class EnemyP3 : MonoBehaviour
 {
-    public GameObject target;
 
+    public GameObject target;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +15,6 @@ public class CameraBehaviors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(target.GetComponent<Transform>().position.x, transform.position.y, transform.position.z);
-        
-
+        transform.position = new Vector3(target.GetComponent<Transform>().position.x - 8, transform.position.y, transform.position.z);
     }
 }
