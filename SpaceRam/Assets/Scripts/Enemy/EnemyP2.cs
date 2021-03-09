@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyP2 : MonoBehaviour
 {
     public GameObject target;
+    public float offset = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +15,10 @@ public class EnemyP2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(target.GetComponent<Transform>().position.x + 8, transform.position.y, transform.position.z);
+        target = Camera.main.GetComponent<CameraBehaviors>().target;
+        if (target == null) return;
+        transform.position = new Vector3(target.GetComponent<Transform>().position.x + offset, transform.position.y, transform.position.z);
     }
+
+    
 }

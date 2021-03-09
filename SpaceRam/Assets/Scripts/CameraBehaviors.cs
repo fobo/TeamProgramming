@@ -15,6 +15,7 @@ public class CameraBehaviors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (target == null) return;
         transform.position = new Vector3(target.GetComponent<Transform>().position.x, transform.position.y, transform.position.z);
         
 

@@ -37,27 +37,7 @@ public class ShootingController : MonoBehaviour
             current_delay = frequency_seconds;
         }
     }
-
-    //GameObject aquireTarget()
-    //{
-    //    GameObject[] possibleTargets = GameObject.FindGameObjectsWithTag("Player");
-    //    if (possibleTargets.Length == 0) //todo: make a proper error throw
-    //    {
-    //        return null;
-    //    }
-    //    GameObject closest = possibleTargets[0];
-    //    foreach (GameObject target in possibleTargets)
-    //    {
-
-    //        //float distance = Vector3.Distance(other.position, transform.position);
-    //        if (Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position))
-    //        {
-    //            closest = target;
-    //        }
-    //    }
-
-    //    return closest;
-    //}
+   
 
 
     void FireProjectile()
