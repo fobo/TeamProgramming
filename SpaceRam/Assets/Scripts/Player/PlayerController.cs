@@ -11,26 +11,78 @@ public class PlayerController : MonoBehaviour
     float curDashPower = 0;
     Animator anim;
     Rigidbody2D rb;
-    public float hp = 100;
-    public float max_hp = 100;
+    Status myStatus;
+    SpriteRenderer mySprite;
 
     // Start is called before the first frame update
     void Start()
     {
+        myStatus = GetComponent<Status>();
         clickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mySprite = GetComponent<SpriteRenderer>();
         rotationSpeed = 1440;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         //anim.speed = 0f;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        //Debug.Log("test");
+
+
+        if (myStatus.invincibilityTime > 0) return;
+        Status col_status = col.gameObject.GetComponent<Status>();
+        Rigidbody2D col_rb = col.gameObject.GetComponent<Rigidbody2D>();
+
+        if (col.gameObject.tag == "Projectile")
+        {
+            float damage = col_status.damage;
+            myStatus.hp -= damage;
+            myStatus.invincibilityTime = 1f;
+            mySprite.color = new Color(1f, 1f, 1f, .5f);
+        }
+
+        if (!(col_status == null) && !(col_rb == null))
+        {
+            
+            if (col.gameObject.tag == "Enemy")
+            {
+
+                if (rb.velocity.magnitude >= col_status.hp)
+                {
+                    Vector2 resistance = (rb.velocity.normalized) * (col_status.hp / 3);
+                    rb.velocity = rb.velocity - resistance;
+                    Destroy(col.gameObject);
+                }
+                else
+                {
+                    col_status.hp -= rb.velocity.magnitude;
+                    myStatus.hp -= rb.velocity.magnitude / 4;
+                    col_rb.velocity = rb.velocity / 2;
+                    rb.velocity = (col_rb.velocity.normalized * -2);
+                    col_status.stunTime = 1f;
+                    myStatus.invincibilityTime = 1f;
+                }
+            }
+        }
     }
 
-    private void FixedUpdate()
+
+    private void LateUpdate()
     {
+        if (myStatus.hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        if (myStatus.invincibilityTime > 0)
+        {
+            mySprite.color = new Color(1f, 1f, 1f, .5f);
+        } 
+        else
+        {
+            mySprite.color = new Color(1f, 1f, 1f, 1f);
+        }
         
     }
 
@@ -54,7 +106,7 @@ public class PlayerController : MonoBehaviour
         
         }
 
-        Debug.Log(Mathf.Round((curDashPower / maxDashPower)));
+        //Debug.Log(Mathf.Round((curDashPower / maxDashPower)));
         anim.Play("ram_ship", 0, (curDashPower / maxDashPower)*.999f); ; ; ; ; ; ;
 
         if (Input.GetMouseButton(1))
