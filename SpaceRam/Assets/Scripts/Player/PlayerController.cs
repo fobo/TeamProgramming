@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
         if (col.gameObject.tag == "Projectile")
         {
+            SoundManagerScript.PlaySound("shipHitSound");
             float damage = col_status.damage;
             myStatus.hp -= damage;
             myStatus.invincibilityTime = 1f;
@@ -50,12 +51,16 @@ public class PlayerController : MonoBehaviour
 
                 if (rb.velocity.magnitude >= col_status.hp)
                 {
+                    //cronch sound
+                    SoundManagerScript.PlaySound("shipKillEnemySound");
                     Vector2 resistance = (rb.velocity.normalized) * (col_status.hp / 3);
                     rb.velocity = rb.velocity - resistance;
                     Destroy(col.gameObject);
                 }
                 else
                 {
+                    //bonk sound
+                    SoundManagerScript.PlaySound("shipBounceEnemySound");
                     col_status.hp -= rb.velocity.magnitude;
                     myStatus.hp -= rb.velocity.magnitude / 4;
                     col_rb.velocity = rb.velocity / 2;
@@ -72,6 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         if (myStatus.hp <= 0)
         {
+            SoundManagerScript.PlaySound("shipDieSound");
             Destroy(gameObject);
         }
 
