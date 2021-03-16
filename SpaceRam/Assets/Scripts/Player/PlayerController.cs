@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Status myStatus;
     SpriteRenderer mySprite;
+    ScoreManager scoreManager;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         //anim.speed = 0f;
+        scoreManager = new ScoreManager();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -56,6 +58,8 @@ public class PlayerController : MonoBehaviour
                     Vector2 resistance = (rb.velocity.normalized) * (col_status.hp / 3);
                     rb.velocity = rb.velocity - resistance;
                     Destroy(col.gameObject);
+                    //cronch points
+                    ScoreManager.addScore(10);
                 }
                 else
                 {
