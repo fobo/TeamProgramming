@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController2 : MonoBehaviour
 {
 
     Vector3 clickPoint;

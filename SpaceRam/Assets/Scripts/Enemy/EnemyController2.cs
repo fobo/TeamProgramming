@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController2 : MonoBehaviour
 {
     //public Transform ram_ship;
     private float moveSpeed = 500f;
@@ -13,31 +13,6 @@ public class EnemyController : MonoBehaviour
     private Vector2 movement;
     private Status myStatus;
 
-
-    //void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if(col.gameObject.tag != "Player")
-    //    {
-    //        return;
-    //    }
-
-    //    Rigidbody2D col_rb = col.gameObject.GetComponent<Rigidbody2D>();
-
-    //    if (col_rb.velocity.magnitude >= hp)
-    //    {
-    //        Vector2 resistance = (col_rb.velocity.normalized) * (hp / 2);
-    //        col_rb.velocity = col_rb.velocity - resistance;
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        hp -= col_rb.velocity.magnitude;
-    //        rb.velocity = col_rb.velocity/2;
-    //        col_rb.velocity = (col_rb.velocity.normalized*-2);
-    //        stunTime = 1f;
-    //    }
-
-    //}
 
 
     // Start is called before the first frame update
