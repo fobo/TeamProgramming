@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyP4 : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
-    public GameObject target;
+
+    public static int currentScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +16,11 @@ public class EnemyP4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(target.GetComponent<Transform>().position.x + 8, transform.position.y, transform.position.z);
+        
+    }
+
+    public static void addScore(int points)
+    {
+        currentScore += points;
     }
 }

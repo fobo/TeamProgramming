@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - bullet_weak
+  - Projectile
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - 
   - 
   - Enemies
-  - 
+  - Projectiles
   - 
   - 
   - 

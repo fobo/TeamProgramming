@@ -9,6 +9,7 @@ public class Status_Renderer : MonoBehaviour
     private float host_hp;
     private float host_max_hp;
     private float default_hp_x_scale;
+    public float y_offset = -0.5f;
     private void Start()
     {
         if (transform.root == transform)
@@ -20,27 +21,24 @@ public class Status_Renderer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        EnemyController enemy_host = gameObject.GetComponentInParent<EnemyController>();
-        PlayerController player_host = gameObject.GetComponentInParent<PlayerController>();
+        Status host_status = gameObject.GetComponentInParent<Status>();
+
         transform.rotation = Quaternion.Euler(0, 0, 0);
+        //change the 0.5f to something else
         transform.position = new Vector3(gameObject.transform.parent.transform.position.x, 
-                                         gameObject.transform.parent.transform.position.y-0.5f, 
+                                         gameObject.transform.parent.transform.position.y+y_offset, 
                                          gameObject.transform.parent.transform.position.z);
 
         if (transform.root == transform)
         {
             Destroy(this);
         }
-        if (enemy_host != null)
+        if (host_status != null)
         {
-            host_max_hp = enemy_host.max_hp;
-            host_hp = enemy_host.hp; 
-
-
-        } else if (player_host != null)
-        {
+            host_max_hp = host_status.max_hp;
+            host_hp = host_status.hp; 
 
 
         } else

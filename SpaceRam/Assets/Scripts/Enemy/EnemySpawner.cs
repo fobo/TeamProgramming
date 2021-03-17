@@ -57,6 +57,9 @@ public class EnemySpawner : MonoBehaviour
 
           }
       } */
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 1f);
+    }
 
 } // class

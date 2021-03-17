@@ -25,7 +25,7 @@ public class ShootingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (parentController.stunTime > 0)
+        if (parentController.GetComponentInParent<Status>().stunTime > 0)
         {
             return;
         }
@@ -37,28 +37,13 @@ public class ShootingController : MonoBehaviour
             current_delay = frequency_seconds;
         }
     }
-
-    GameObject aquireTarget()
-    {
-        GameObject[] possibleTargets = GameObject.FindGameObjectsWithTag("Player");
-        GameObject closest = possibleTargets[0];
-        foreach (GameObject target in possibleTargets)
-        {
-
-            //float distance = Vector3.Distance(other.position, transform.position);
-            if (Vector3.Distance(target.transform.position, transform.position) < Vector3.Distance(closest.transform.position, transform.position))
-            {
-                closest = target;
-            }
-        }
-
-        return closest;
-    }
+   
 
 
     void FireProjectile()
     {
-        GameObject closest = aquireTarget();
+        GameObject closest = GlobalCustom.aquireTarget(gameObject, "Player");
+        if (closest == null) return;
 
         Vector2 targetPos = closest.transform.position;
         direction = targetPos - (Vector2)transform.position;
