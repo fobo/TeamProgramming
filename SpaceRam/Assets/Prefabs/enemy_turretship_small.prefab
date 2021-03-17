@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_hp: 20
   hp: 20
-  hp_regen: 1
+  hp_regen: 0
   stunTime: 0
   hasLifeTime: 0
   lifeTime: 0
