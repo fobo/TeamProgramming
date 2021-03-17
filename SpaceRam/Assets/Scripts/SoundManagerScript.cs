@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManagerScript : MonoBehaviour
 {
-    public static AudioClip shipHitSound, shipPowerSound, shipDieSound, shipKillEnemySound, shipBounceEnemySound;
+    public static AudioClip shipHitSound, shipPowerSound, shipDieSound, shipKillEnemySound, shipBounceEnemySound, shipCollectPickup;
     static AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,7 @@ public class SoundManagerScript : MonoBehaviour
         shipDieSound = Resources.Load<AudioClip>("beep-sharpstring");
         shipKillEnemySound = Resources.Load<AudioClip>("tap-crisp");
         shipBounceEnemySound = Resources.Load<AudioClip>("tap-percussive");
+        shipCollectPickup = Resources.Load<AudioClip>("blubb-charge");
         audioSource = GetComponent<AudioSource>();
 
     }
@@ -43,6 +44,9 @@ public class SoundManagerScript : MonoBehaviour
                 break;
             case "shipBounceEnemySound":
                 audioSource.PlayOneShot(shipBounceEnemySound);
+                break;
+            case "shipCollectPickup":
+                audioSource.PlayOneShot(shipCollectPickup);
                 break;
         }
     }
