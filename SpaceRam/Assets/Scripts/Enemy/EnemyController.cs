@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour
             Vector2 resistance = (col_rb.velocity.normalized) * (hp / 2);
             col_rb.velocity = col_rb.velocity - resistance;
             Destroy(gameObject);
+
         }
         else
         {
