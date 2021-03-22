@@ -8,6 +8,7 @@ TagManager:
   - bullet_weak
   - Projectile
   - Wall
+  - ScoreTextTag
   layers:
   - Default
   - TransparentFX

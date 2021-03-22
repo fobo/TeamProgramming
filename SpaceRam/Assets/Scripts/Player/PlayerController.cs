@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
     Status myStatus;
     SpriteRenderer mySprite;
 
+    private GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         //anim.speed = 0f;
+        //score = 0;
+        // score
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        //scoreText = GetComponent<Text>();
+        //game.FindGameObjectWithTag("ScoreTextTag");
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -55,6 +63,7 @@ public class PlayerController : MonoBehaviour
                     SoundManagerScript.PlaySound("shipKillEnemySound");
                     Vector2 resistance = (rb.velocity.normalized) * (col_status.hp / 3);
                     rb.velocity = rb.velocity - resistance;
+                    gameManager.UpdateScore(10);
                     Destroy(col.gameObject);
                 }
                 else
@@ -79,6 +88,7 @@ public class PlayerController : MonoBehaviour
         {
             SoundManagerScript.PlaySound("shipDieSound");
             Destroy(gameObject);
+            gameManager.GameOver();
         }
 
         if (myStatus.invincibilityTime > 0)
