@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Status_Renderer : MonoBehaviour
 {
@@ -10,12 +11,14 @@ public class Status_Renderer : MonoBehaviour
     private float host_max_hp;
     private float default_hp_x_scale;
     public float y_offset = -0.5f;
+    private TextMeshPro text_renderer;
     private void Start()
     {
         if (transform.root == transform)
         {
             Debug.Log("Status Renderer is not a child. Me die.");
         }
+        text_renderer = gameObject.transform.Find("HpText").gameObject.GetComponent<TextMeshPro>();
         hp_child = gameObject.transform.Find("hp").gameObject;
         default_hp_x_scale = hp_child.transform.localScale.x;
     }
@@ -49,7 +52,7 @@ public class Status_Renderer : MonoBehaviour
 
         float percentage_hp = host_hp / host_max_hp;
         hp_child.transform.localScale = new Vector3(default_hp_x_scale * percentage_hp, hp_child.transform.localScale.y, hp_child.transform.localScale.z);
-
+        text_renderer.text = Mathf.Round(host_hp).ToString() + " / " + host_max_hp.ToString();
     }
 
     private void OnDrawGizmos()

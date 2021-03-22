@@ -14,17 +14,17 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI gameOverText; // add Game Over text, disable object
     public Button restartButton;
     // list accept type
-    public List<GameObject> targets; 
+    //public List<GameObject> targets; 
 
     // 1 sec spawn time
-    private float spawnRate = 1.0f;
+    //private float spawnRate = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         isGameActive = true;
         score = 0;
-        StartCoroutine(SpawnTarget());
+        //StartCoroutine(SpawnTarget());
         UpdateScore(0);
         
     }
@@ -35,17 +35,17 @@ public class GameManager : MonoBehaviour
         
     }
 
-    IEnumerator SpawnTarget() {
+    //IEnumerator SpawnTarget() {
 
-        while(isGameActive)
-        {
-        yield return new WaitForSeconds(spawnRate);
-        int index = Random.Range(0, targets.Count);
-        Instantiate(targets[index]);
+    //    while(isGameActive)
+    //    {
+    //    yield return new WaitForSeconds(spawnRate);
+    //    int index = Random.Range(0, targets.Count);
+    //    Instantiate(targets[index]);
         
-        }
+    //    }
 
-    }
+    //}
     public void UpdateScore(int scoreToAdd) {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
