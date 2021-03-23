@@ -734,11 +734,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   offset: 12
---- !u!1 &967710620 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7599739430294444141, guid: 60138baecdb978f49a1a25c87463f8cb, type: 3}
-  m_PrefabInstance: {fileID: 918454002}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &976679362
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +767,6 @@ MonoBehaviour:
   isGameActive: 0
   gameOverText: {fileID: 380461995}
   restartButton: {fileID: 1483669661}
-  targets: []
 --- !u!4 &976679364
 Transform:
   m_ObjectHideFlags: 0
@@ -1237,11 +1231,6 @@ MonoBehaviour:
   isGameActive: 0
   gameOverText: {fileID: 0}
   restartButton: {fileID: 0}
-  targets:
-  - {fileID: 4137803063491501375, guid: 5212534ca9bbd174b830a2c39a5f8676, type: 3}
-  - {fileID: 4137803063491501375, guid: 5212534ca9bbd174b830a2c39a5f8676, type: 3}
-  - {fileID: 4137803063491501375, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
-  - {fileID: 0}
 --- !u!1001 &1444502675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2022,6 +2011,6 @@ PrefabInstance:
     - target: {fileID: 4472648804776598743, guid: 2ec33bd71ae6b634ba3fb537ca6da4e7, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 967710620}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ec33bd71ae6b634ba3fb537ca6da4e7, type: 3}

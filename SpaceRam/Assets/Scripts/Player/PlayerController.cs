@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickPoint;
     float rotationSpeed;
-    float maxDashPower = 1000;
+    float maxDashPower = 1000; //1000 == 20 magnitude. 50 to 1
     float curDashPower = 0;
     Animator anim;
     Rigidbody2D rb;
@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log(rb.velocity.magnitude);
+        float myHP = myStatus.hp;
+        float myModdedHP = myHP + (myHP * (.2f * rb.velocity.magnitude));
+
 
 
         if (myStatus.invincibilityTime > 0) return;
