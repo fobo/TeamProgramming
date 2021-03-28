@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     public bool isGameActive;
     public TextMeshProUGUI gameOverText; // add Game Over text, disable object
     public Button restartButton;
+    public TextMeshProUGUI highScoresWeb; 
+    public TextMeshProUGUI scoreTextStatus;
+    public Button submitButton;
+    public InputField playerName;
     // list accept type
     //public List<GameObject> targets; 
 
@@ -54,9 +58,35 @@ public class GameManager : MonoBehaviour
     public void GameOver() {
         restartButton.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        playerName.gameObject.SetActive(true);
+        submitButton.gameObject.SetActive(true);
+        highScoresWeb.gameObject.SetActive(true);
         isGameActive = false;
     }
 
+public void CallSaveData() {
+        StartCoroutine(SavePlayerData());
+    }
+
+    IEnumerator SavePlayerData() {
+
+        WWWForm form = new WWWForm();
+        //form.AddField("id", null );
+        form.AddField("playerName", playerName.text);
+        form.AddField("score", score);
+
+        WWW www = new WWW("http://206.189.198.175/SpaceRam/savedata.php", form);
+        yield return www;
+        if(www.text == "0") {
+            Debug.Log("Game Saved.");
+            scoreTextStatus.text = "Score Submitted: " + playerName.text + " " + score;
+            scoreTextStatus.gameObject.SetActive(true);
+        } else {
+            Debug.Log("Save failed. Error #" + www.text);
+        }
+        // UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+    
     public void RestartGame() {
        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
