@@ -5,13 +5,15 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     //public Transform ram_ship;
-    private float moveSpeed = 500f;
+    private float moveSpeed = 100f;
     private Rigidbody2D rb;
     private BoxCollider2D box2d;
     private Collider2D collider2d;
     private CapsuleCollider2D capsule2d;
     private Vector2 movement;
     private Status myStatus;
+    public bool goHome = true;
+    private Vector3 home;
 
 
     //void OnTriggerEnter2D(Collider2D col)
@@ -43,6 +45,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        home = gameObject.transform.position;
         rb = GetComponent<Rigidbody2D>();
         box2d = GetComponent<BoxCollider2D>();
         capsule2d = GetComponent<CapsuleCollider2D>();
@@ -95,26 +98,30 @@ public class EnemyController : MonoBehaviour
         //    }
         //}
 
-        GameObject target = GlobalCustom.aquireTarget(gameObject,"Player", 4);
+        GameObject target = GlobalCustom.aquireTarget(gameObject,"Player", 8);
         if(target == null)
         {
             return;
         }
-        Vector3 direction = target.transform.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Vector3 direction = home - transform.position;
+        direction.Normalize();
+        Vector3 targetDirection = target.transform.position - transform.position;
+        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         rb.rotation = angle;
-        //direction.Normalize();
-        //movement = direction;
+        movement = direction;
     }
 
     private void FixedUpdate()
     {
-       //moveCharacter(movement);
+        if(goHome) { 
+            moveCharacter(movement);
+        }
     }
     void moveCharacter(Vector2 direction)
     {
-        //if (myStatus.stunTime > 0) return;
-        rb.velocity = (direction * moveSpeed * Time.deltaTime);
+        if (myStatus.stunTime > 0) return;
+        rb.velocity = (direction * Mathf.Min(moveSpeed, moveSpeed * 2 * Mathf.Abs(home.magnitude - transform.position.magnitude)) * Time.deltaTime);
+        
     }
 
 

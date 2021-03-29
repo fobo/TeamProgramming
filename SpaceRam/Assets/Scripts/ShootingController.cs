@@ -42,7 +42,7 @@ public class ShootingController : MonoBehaviour
 
     void FireProjectile()
     {
-        GameObject closest = GlobalCustom.aquireTarget(gameObject, "Player");
+        GameObject closest = GlobalCustom.aquireTarget(gameObject, "Player",8);
         if (closest == null) return;
 
         Vector2 targetPos = closest.transform.position;

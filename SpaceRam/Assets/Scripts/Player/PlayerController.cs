@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     float damageRatioPlayer = .5f; //50% of hp is used to do damage in collisions as player
     float damageRatioEnemy = .1f; //10% of hp is used to do damage in collisions as enemy
 
+
     Animator anim;
     Rigidbody2D rb;
     Status myStatus;
@@ -80,7 +81,7 @@ public class PlayerController : MonoBehaviour
                     SoundManagerScript.PlaySound("shipBounceEnemySound");
                     theirStatus.hp -= theirDamage;
                     col_rb.velocity = rb.velocity / 4;
-                    rb.velocity = (col_rb.velocity.normalized * -2);
+                    rb.velocity = (col_rb.velocity.normalized * -1);
                     theirStatus.stunTime = 1f;
                     myStatus.invincibilityTime = 1f; //Gain 1 second of invicibility on bonks so you don't get chain bonked
                 }
