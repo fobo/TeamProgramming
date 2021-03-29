@@ -75,27 +75,27 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        BoxCollider2D cameraBox = Camera.main.GetComponent<BoxCollider2D>();
-        if (cameraBox != null) {
-            if (!collider2d.IsTouching(cameraBox))
-            {
-                Vector3 dir;// = Camera.main.transform.position - transform.position;
-                float vDistFromCamera = Camera.main.transform.position.y - transform.position.y;
-                float hDistFromCamera = Camera.main.transform.position.x - transform.position.x;
-                if (Mathf.Abs(vDistFromCamera) > Mathf.Abs(hDistFromCamera))
-                {
-                    dir = new Vector3(0, vDistFromCamera, 0);
-                } else
-                {
-                    dir = new Vector3(hDistFromCamera, 0, 0);
-                }
+        //BoxCollider2D cameraBox = Camera.main.GetComponent<BoxCollider2D>();
+        //if (cameraBox != null) {
+        //    if (!collider2d.IsTouching(cameraBox))
+        //    {
+        //        Vector3 dir;// = Camera.main.transform.position - transform.position;
+        //        float vDistFromCamera = Camera.main.transform.position.y - transform.position.y;
+        //        float hDistFromCamera = Camera.main.transform.position.x - transform.position.x;
+        //        if (Mathf.Abs(vDistFromCamera) > Mathf.Abs(hDistFromCamera))
+        //        {
+        //            dir = new Vector3(0, vDistFromCamera, 0);
+        //        } else
+        //        {
+        //            dir = new Vector3(hDistFromCamera, 0, 0);
+        //        }
 
-                dir.Normalize();
-                moveCharacter(dir);
-            }
-        }
+        //        dir.Normalize();
+        //        moveCharacter(dir);
+        //    }
+        //}
 
-        GameObject target = GlobalCustom.aquireTarget(gameObject,"Player");
+        GameObject target = GlobalCustom.aquireTarget(gameObject,"Player", 4);
         if(target == null)
         {
             return;
