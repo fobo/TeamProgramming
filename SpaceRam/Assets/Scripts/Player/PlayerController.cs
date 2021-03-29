@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     float rotationSpeed;
     float maxDashPower = 1000; //1000 == 20 magnitude. 50 to 1
     float curDashPower = 0;
+    float damageRatioPlayer = .5f; //50% of hp is used to do damage in collisions as player
+    float damageRatioEnemy = .1f; //10% of hp is used to do damage in collisions as enemy
+
     Animator anim;
     Rigidbody2D rb;
     Status myStatus;
@@ -36,51 +39,55 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(rb.velocity.magnitude);
-        float myHP = myStatus.hp;
-        float myModdedHP = myHP + (myHP * (.2f * rb.velocity.magnitude));
-
-
-
+        Debug.Log("My Magnitude: "+rb.velocity.magnitude);
         if (myStatus.invincibilityTime > 0) return;
-        Status col_status = col.gameObject.GetComponent<Status>();
+
+        Status theirStatus = col.gameObject.GetComponent<Status>();
         Rigidbody2D col_rb = col.gameObject.GetComponent<Rigidbody2D>();
+        float myMagnitude = rb.velocity.magnitude;
 
         if (col.gameObject.tag == "Projectile")
         {
             SoundManagerScript.PlaySound("shipHitSound");
-            float damage = col_status.damage;
+            float damage = theirStatus.damage;
             myStatus.hp -= damage;
-            myStatus.invincibilityTime = 1f;
+            myStatus.invincibilityTime = 0.1f; //1/10th of a second invicibility on projectiles
             mySprite.color = new Color(1f, 1f, 1f, .5f);
         }
 
-        if (!(col_status == null) && !(col_rb == null))
+        if (!(theirStatus == null) && !(col_rb == null))
         {
-            
+            float theirHP = theirStatus.hp;
+            float theirDamage = myMagnitude; //last var makes it so only half your hp is doing damage
+            float myDamage = myMagnitude/10; //last variable makes it so enemies only use a fraction of their hp to damage
+            Debug.Log("My Damage: " + myDamage);
+            float killBonus =  0; //reduces damage if enemy dies
+
             if (col.gameObject.tag == "Enemy")
             {
 
-                if (rb.velocity.magnitude >= col_status.hp)
+                if (theirDamage >= theirHP) //they got killed
                 {
                     //cronch sound
                     SoundManagerScript.PlaySound("shipKillEnemySound");
-                    Vector2 resistance = (rb.velocity.normalized) * (col_status.hp / 3);
-                    rb.velocity = rb.velocity - resistance;
                     gameManager.UpdateScore(10);
+                    killBonus = 0.5f; //take half damage if they get killed
                     Destroy(col.gameObject);
                 }
                 else
                 {
                     //bonk sound
                     SoundManagerScript.PlaySound("shipBounceEnemySound");
-                    col_status.hp -= rb.velocity.magnitude;
-                    myStatus.hp -= rb.velocity.magnitude / 4;
-                    col_rb.velocity = rb.velocity / 2;
+                    theirStatus.hp -= theirDamage;
+                    col_rb.velocity = rb.velocity / 4;
                     rb.velocity = (col_rb.velocity.normalized * -2);
-                    col_status.stunTime = 1f;
-                    myStatus.invincibilityTime = 1f;
+                    theirStatus.stunTime = 1f;
+                    myStatus.invincibilityTime = 1f; //Gain 1 second of invicibility on bonks so you don't get chain bonked
                 }
+
+                myStatus.hp -= myDamage - myDamage*killBonus; //Always take damage
+
+
             }
         }
     }
@@ -98,12 +105,12 @@ public class PlayerController : MonoBehaviour
         if (myStatus.invincibilityTime > 0)
         {
             mySprite.color = new Color(1f, 1f, 1f, .5f);
-        } 
+        }
         else
         {
             mySprite.color = new Color(1f, 1f, 1f, 1f);
         }
-        
+
     }
 
     // Update is called once per frame
@@ -119,15 +126,15 @@ public class PlayerController : MonoBehaviour
             var rotationGoal = Quaternion.LookRotation(Vector3.forward, clickPoint - transform.position);
             //Debug.Log(rotationGoal * Quaternion.Inverse(transform.rotation));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotationGoal, step);
-            rb.velocity -= (rb.velocity*4) * Time.deltaTime;
+            rb.velocity -= (rb.velocity * 4) * Time.deltaTime;
             rb.angularVelocity = 0;
 
-            curDashPower = Mathf.Clamp(curDashPower+ (maxDashPower*Time.deltaTime), maxDashPower/4, maxDashPower);
-        
+            curDashPower = Mathf.Clamp(curDashPower + (maxDashPower * Time.deltaTime), maxDashPower / 4, maxDashPower);
+
         }
 
         //Debug.Log(Mathf.Round((curDashPower / maxDashPower)));
-        anim.Play("ram_ship", 0, (curDashPower / maxDashPower)*.999f); ; ; ; ; ; ;
+        anim.Play("ram_ship", 0, (curDashPower / maxDashPower) * .999f); ; ; ; ; ; ;
 
         if (Input.GetMouseButton(1))
         {
@@ -148,13 +155,14 @@ public class PlayerController : MonoBehaviour
         float bottomBoundary = -5;
         float padding = 0f; //in case a bug starts happening where the ship gets stuck in the boundaries and starts vibrating, increase this value
 
-        if (transform.position.y > topBoundary || 
-            transform.position.y < bottomBoundary) {
+        if (transform.position.y > topBoundary ||
+            transform.position.y < bottomBoundary)
+        {
             float curZ = transform.rotation.eulerAngles.z;
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, curZ + (270-curZ)*2); //270 because 360/0 is vertical and 270 is horizontal
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, curZ + (270 - curZ) * 2); //270 because 360/0 is vertical and 270 is horizontal
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * -1);
-            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary + padding, topBoundary - padding),0);
-            
+            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary + padding, topBoundary - padding), 0);
+
         }
     }
 }

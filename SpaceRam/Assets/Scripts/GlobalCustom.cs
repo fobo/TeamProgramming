@@ -6,17 +6,39 @@ public class GlobalCustom : MonoBehaviour
 {
     public static GameObject aquireTarget(GameObject me, string tag)
     {
+        return aquireTarget(me, tag, -1);
+    }
+
+    public static GameObject aquireTarget(GameObject me, string tag, float range)
+    {
+
         GameObject[] possibleTargets = GameObject.FindGameObjectsWithTag(tag);
         if (possibleTargets.Length == 0)
         {
             return null;
         }
-        GameObject closest = possibleTargets[0];
+        GameObject closest = null;
         foreach (GameObject target in possibleTargets)
         {
+            float currentDistance = Vector3.Distance(target.transform.position, me.transform.position);
+
+            if (range > 0)
+            {
+                if (currentDistance > range)
+                {
+                    continue;
+                }
+
+                
+            }
 
             //float distance = Vector3.Distance(other.position, transform.position);
-            if (Vector3.Distance(target.transform.position, me.transform.position) < Vector3.Distance(closest.transform.position, me.transform.position))
+
+            if (closest == null)
+            {
+                closest = target;
+            } 
+            else if (currentDistance < Vector3.Distance(closest.transform.position, me.transform.position))
             {
                 closest = target;
             }
