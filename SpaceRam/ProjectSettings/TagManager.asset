@@ -9,6 +9,7 @@ TagManager:
   - Projectile
   - Wall
   - ScoreTextTag
+  - Portal
   layers:
   - Default
   - TransparentFX

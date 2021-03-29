@@ -6,29 +6,33 @@ public class teleportation : MonoBehaviour
 {
     public GameObject Portal;
     public GameObject Player;
+    public float delayBetweenTeleports = 2f;
+    public float downTime = 0f;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (downTime > 0) downTime -= Time.deltaTime;
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if (downTime > 0) return;
+        if (other.gameObject.tag == "Player")
         {
-            StartCoroutine(Teleport ());
+            Teleport();
         }
     }
 
-    IEnumerator Teleport()
+    void Teleport()
     {
-        yield return new WaitForSeconds(5);
-        Player.transform.position = new Vector2(Portal.transform.position.x + 2, Portal.transform.position.y);
+        downTime = delayBetweenTeleports;
+        if (Portal == null) {
+            Portal = GlobalCustom.aquireTarget(gameObject, "Portal");
+        }
+        Portal.GetComponent<teleportation>().downTime = delayBetweenTeleports;
+
+        Player = GlobalCustom.aquireTarget(gameObject, "Player");
+        Player.transform.position = new Vector2(Portal.transform.position.x, Portal.transform.position.y);
     }
 }

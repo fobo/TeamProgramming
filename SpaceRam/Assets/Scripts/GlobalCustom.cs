@@ -20,6 +20,8 @@ public class GlobalCustom : MonoBehaviour
         GameObject closest = null;
         foreach (GameObject target in possibleTargets)
         {
+            if (target.Equals(me)) continue;
+
             float currentDistance = Vector3.Distance(target.transform.position, me.transform.position);
 
             if (range > 0)
