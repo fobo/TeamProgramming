@@ -8,10 +8,8 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickPoint;
     float rotationSpeed;
-    float maxDashPower = 1000; //1000 == 20 magnitude. 50 to 1
+    float maxDashPower = 1000;
     float curDashPower = 0;
-    float damageRatioPlayer = .5f; //50% of hp is used to do damage in collisions as player
-    float damageRatioEnemy = .1f; //10% of hp is used to do damage in collisions as enemy
 
 
     Animator anim;
@@ -40,7 +38,9 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
+
         Debug.Log("My Magnitude: "+rb.velocity.magnitude);
+
         if (myStatus.invincibilityTime > 0) return;
 
         Status theirStatus = col.gameObject.GetComponent<Status>();
