@@ -6,18 +6,24 @@ public class teleportation : MonoBehaviour
 {
     public GameObject Portal;
     public GameObject Player;
+    public Animator animator;
     public float delayBetweenTeleports = 2f;
-    public float downTime = 0f;
     // Start is called before the first frame update
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
-        if (downTime > 0) downTime -= Time.deltaTime;
+        float downTime = animator.GetFloat("DisabledTimer");
+        if (downTime > 0) animator.SetFloat("DisabledTimer", downTime - Time.deltaTime);
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (downTime > 0) return;
+        if (animator.GetFloat("DisabledTimer") > 0) return;
         if (other.gameObject.tag == "Player")
         {
             Teleport();
@@ -26,11 +32,11 @@ public class teleportation : MonoBehaviour
 
     void Teleport()
     {
-        downTime = delayBetweenTeleports;
+        animator.SetFloat("DisabledTimer", delayBetweenTeleports);
         if (Portal == null) {
             Portal = GlobalCustom.aquireTarget(gameObject, "Portal");
         }
-        Portal.GetComponent<teleportation>().downTime = delayBetweenTeleports;
+        Portal.GetComponent<teleportation>().animator.SetFloat("DisabledTimer", delayBetweenTeleports);
 
         Player = GlobalCustom.aquireTarget(gameObject, "Player");
         Player.transform.position = new Vector2(Portal.transform.position.x, Portal.transform.position.y);
