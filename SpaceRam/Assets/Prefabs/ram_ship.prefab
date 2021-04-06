@@ -121,7 +121,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1000000
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_hp: 20
   hp: 20
-  hp_regen: 0.1
+  hp_regen: 0.5
   stunTime: 0
   hasLifeTime: 0
   lifeTime: 0

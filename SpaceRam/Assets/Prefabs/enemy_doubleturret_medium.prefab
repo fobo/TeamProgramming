@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89e822c7e8646a49a2e90d86f7bb578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationOffset: -90
+  goHome: 1
 --- !u!114 &5146223900550244948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,8 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b92446977e9a2e47a46570975932c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_hp: 40
-  hp: 40
+  max_hp: 15
+  hp: 15
   hp_regen: 0
   stunTime: 0
   hasLifeTime: 0
@@ -236,7 +238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1599391801818239067, guid: d24e7e6f9f67ecc42bc6256f03443fa3, type: 3}
       propertyPath: frequency_seconds
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d24e7e6f9f67ecc42bc6256f03443fa3, type: 3}
@@ -310,7 +312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1599391801818239067, guid: d24e7e6f9f67ecc42bc6256f03443fa3, type: 3}
       propertyPath: frequency_seconds
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d24e7e6f9f67ecc42bc6256f03443fa3, type: 3}

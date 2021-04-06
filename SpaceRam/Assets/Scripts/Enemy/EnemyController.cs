@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     //public Transform ram_ship;
     private float moveSpeed = 100f;
+    public float rotationOffset = 0f;
     private Rigidbody2D rb;
     private BoxCollider2D box2d;
     private Collider2D collider2d;
@@ -107,7 +108,7 @@ public class EnemyController : MonoBehaviour
         direction.Normalize();
         Vector3 targetDirection = target.transform.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
+        rb.rotation = angle + rotationOffset;
         movement = direction;
     }
 

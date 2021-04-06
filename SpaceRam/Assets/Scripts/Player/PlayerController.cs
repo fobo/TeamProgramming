@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickPoint;
     float rotationSpeed;
-    float maxDashPower = 1000;
+    float maxDashPower = 500;
     float curDashPower = 0;
+    float bonkTimer = 0.5f;
 
 
     Animator anim;
@@ -34,6 +35,12 @@ public class PlayerController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         //scoreText = GetComponent<Text>();
         //game.FindGameObjectWithTag("ScoreTextTag");
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Bounce();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -82,7 +89,7 @@ public class PlayerController : MonoBehaviour
                     theirStatus.hp -= theirDamage;
                     col_rb.velocity = rb.velocity / 4;
                     rb.velocity = (col_rb.velocity.normalized * -1);
-                    theirStatus.stunTime = 1f;
+                    theirStatus.stunTime = bonkTimer;
                     myStatus.invincibilityTime = 1f; //Gain 1 second of invicibility on bonks so you don't get chain bonked
                 }
 
@@ -132,6 +139,14 @@ public class PlayerController : MonoBehaviour
 
             curDashPower = Mathf.Clamp(curDashPower + (maxDashPower * Time.deltaTime), maxDashPower / 4, maxDashPower);
 
+        } else
+        {
+
+            if (rb.velocity != Vector2.zero)
+            {
+                float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+            }
         }
 
         //Debug.Log(Mathf.Round((curDashPower / maxDashPower)));
@@ -154,16 +169,22 @@ public class PlayerController : MonoBehaviour
         Camera camera = Camera.main;
         float topBoundary = 5;
         float bottomBoundary = -5;
-        float padding = 0f; //in case a bug starts happening where the ship gets stuck in the boundaries and starts vibrating, increase this value
-
+        
         if (transform.position.y > topBoundary ||
             transform.position.y < bottomBoundary)
         {
-            float curZ = transform.rotation.eulerAngles.z;
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, curZ + (270 - curZ) * 2); //270 because 360/0 is vertical and 270 is horizontal
+            //Bounce();
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * -1);
-            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary + padding, topBoundary - padding), 0);
+            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary, topBoundary), 0);
 
         }
     }
+
+    //void Bounce() {
+    //    float curZ = transform.rotation.eulerAngles.z;
+    //    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, curZ + (270 - curZ) * 2); //270 because 360/0 is vertical and 270 is horizontal
+        
+
+    //}
+
 }

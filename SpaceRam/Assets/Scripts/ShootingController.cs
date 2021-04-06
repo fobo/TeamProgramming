@@ -7,11 +7,12 @@ public class ShootingController : MonoBehaviour
 
     public GameObject projectile;
     public float frequency_seconds = 1;
+    public float variation_seconds = 0f;
     //public Transform Target;
     private Vector2 direction;
     private float current_delay;
     public float Force = 100;
-    private EnemyController parentController;
+    public EnemyController parentController;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,7 @@ public class ShootingController : MonoBehaviour
         if (current_delay <= 0)
         {
             FireProjectile();
-            current_delay = frequency_seconds;
+            current_delay = frequency_seconds + Random.Range(variation_seconds*-1, variation_seconds);
         }
     }
    
