@@ -101,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - {fileID: 4472648805686743935}
-  - {fileID: 0}
 --- !u!114 &4472648804776598743
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pickup : MonoBehaviour
 {
@@ -8,10 +9,34 @@ public class Pickup : MonoBehaviour
     public enum Type
     {
         healSmall, // 10 hp
-        healLarge  // 20 hp
+        healLarge,  // 20 hp
+        levelChange
     }
     public Type type = Type.healSmall;
+    public Sprite sprHealSmall, sprHealLarge, sprLevelChange;
+    public string levelName = "Debug_Level";
 
+    private void Start()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        //spriteRenderer.sprite = newSprite; 
+
+        
+
+            switch (type)
+            {
+                case (Type.healSmall):
+                    sprite.sprite = sprHealSmall;
+                    break;
+                case (Type.healLarge):
+                    sprite.sprite = sprHealLarge;
+                    break;
+                case (Type.levelChange):
+                    sprite.sprite = sprLevelChange;
+                    break;
+
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //checks if player colliding
@@ -25,7 +50,9 @@ public class Pickup : MonoBehaviour
                 case (Type.healLarge):
                     healTarget(collision, 20);
                     break;
-
+                case (Type.levelChange):
+                    SceneManager.LoadScene(levelName);
+                    break;
             }
         }
     }

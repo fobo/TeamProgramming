@@ -123,3 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  sprHealSmall: {fileID: 21300000, guid: 79d70dae5942f65408a02be078cf12f1, type: 3}
+  sprHealLarge: {fileID: 21300000, guid: 05aafe4c3d9bec24c9220d3d090f8ccb, type: 3}
+  sprLevelChange: {fileID: 21300000, guid: 640cfea642eb42e46823500da665b624, type: 3}
