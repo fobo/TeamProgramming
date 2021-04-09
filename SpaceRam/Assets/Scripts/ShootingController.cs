@@ -13,6 +13,9 @@ public class ShootingController : MonoBehaviour
     private float current_delay;
     public float Force = 100;
     public EnemyController parentController;
+    public float shot_delay = 1f; //shot delay setting
+    private float remaining_shot_delay = 0f;
+    private bool isShooting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +29,34 @@ public class ShootingController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (parentController.GetComponentInParent<Status>().stunTime > 0)
+        if (parentController != null && parentController.GetComponentInParent<Status>().stunTime > 0)
         {
             return;
+        }
+
+        if (isShooting)
+        {
+            remaining_shot_delay -= Time.deltaTime;
+            if(remaining_shot_delay <= 0)
+            {
+                isShooting = false;
+                FireProjectile();
+
+            } else
+            {
+                float scaleAmt = 2*(1 - (remaining_shot_delay / shot_delay));
+                transform.localScale = new Vector3(scaleAmt, scaleAmt, scaleAmt);
+            }
+        } else
+        {
+            transform.localScale = new Vector3(0, 0, 0);
         }
 
         current_delay -= Time.deltaTime;
         if (current_delay <= 0)
         {
-            FireProjectile();
+            isShooting = true;
+            remaining_shot_delay = shot_delay;
             current_delay = frequency_seconds + Random.Range(variation_seconds*-1, variation_seconds);
         }
     }
