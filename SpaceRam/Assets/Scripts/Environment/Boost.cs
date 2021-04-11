@@ -11,8 +11,8 @@ public class Boost : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if(collision.gameObject.tag == "Player")
+        
+        if (collision.gameObject.tag == "Player")
         {
             playerIsColliding = true;
             rb = collision.gameObject.GetComponent<Rigidbody2D>();
