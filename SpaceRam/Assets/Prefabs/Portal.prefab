@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8756161846193105378}
   - component: {fileID: 28340136868704126}
+  - component: {fileID: 6369861420773904854}
   - component: {fileID: 1637944930113448240}
-  - component: {fileID: -7468344385966012185}
   - component: {fileID: 9195328321514263441}
   m_Layer: 0
   m_Name: Portal
@@ -53,6 +53,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6369861420773904854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807196971353076701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a742684a1396db4391f9ece0c47a0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Portal: {fileID: 0}
+  Player: {fileID: 0}
+  animator: {fileID: 0}
+  delayBetweenTeleports: 2
 --- !u!212 &1637944930113448240
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -104,20 +120,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-7468344385966012185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807196971353076701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a3d13f17752134594c4833911c8c6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Portal: {fileID: 0}
-  Player: {fileID: 0}
 --- !u!61 &9195328321514263441
 BoxCollider2D:
   m_ObjectHideFlags: 0
