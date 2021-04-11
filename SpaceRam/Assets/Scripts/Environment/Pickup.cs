@@ -60,7 +60,7 @@ public class Pickup : MonoBehaviour
     {
 
         //heals player for healAmount amount
-        SoundManagerScript.PlaySound("shipCollectPickup");
+        SoundManagerScript.PlaySound("shipCollectPickupSound");
         collision.gameObject.GetComponent<Status>().hp += healAmount;
             Destroy(gameObject);
         

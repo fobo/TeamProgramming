@@ -38,6 +38,7 @@ public class teleportation : MonoBehaviour
         }
         Portal.GetComponent<teleportation>().animator.SetFloat("DisabledTimer", delayBetweenTeleports);
 
+        SoundManagerScript.PlaySound("shipCollectPickupSound");
         Player = GlobalCustom.aquireTarget(gameObject, "Player");
         Player.transform.position = new Vector2(Portal.transform.position.x, Portal.transform.position.y);
     }
