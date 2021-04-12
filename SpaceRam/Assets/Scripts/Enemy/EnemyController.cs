@@ -4,44 +4,49 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    //public Transform ram_ship;
-    private float moveSpeed = 100f;
-    public float rotationOffset = 0f;
     private Rigidbody2D rb;
     private BoxCollider2D box2d;
     private Collider2D collider2d;
     private CapsuleCollider2D capsule2d;
     private Vector2 movement;
     private Status myStatus;
-    public bool goHome = true;
-    private Vector3 home;
+    private GameObject target;
+    private List<GameObject> currentOverlaps = new List<GameObject>();
+
+    public enum MoveType
+    {
+        GUARD, //Drifts back to a single point where it spawned
+        APPROACH, //Heads towards the player but tries to keep a distance weakly
+        PATROL
+    };
+
+    //public Transform ram_ship;
+    public MoveType movementType = MoveType.GUARD;
+    public float moveSpeed = 5f;
+    public float maxSpeed = 10f;
+    public float rotationOffset = 0f;
+    public float approachRange = 4f;
+    public float detectRange = 6f;
+    public float socialDistanceSpeed = 3f;
+    public Vector3 home;
+    public Vector3[] patrolRoute; //change to special prefab array
 
 
-    //void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if(col.gameObject.tag != "Player")
-    //    {
-    //        return;
-    //    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(!currentOverlaps.Contains(other.gameObject))
+        {
+            currentOverlaps.Add(other.gameObject);
+        }
+    }
 
-    //    Rigidbody2D col_rb = col.gameObject.GetComponent<Rigidbody2D>();
-
-    //    if (col_rb.velocity.magnitude >= hp)
-    //    {
-    //        Vector2 resistance = (col_rb.velocity.normalized) * (hp / 2);
-    //        col_rb.velocity = col_rb.velocity - resistance;
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        hp -= col_rb.velocity.magnitude;
-    //        rb.velocity = col_rb.velocity/2;
-    //        col_rb.velocity = (col_rb.velocity.normalized*-2);
-    //        stunTime = 1f;
-    //    }
-
-    //}
-
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (currentOverlaps.Contains(other.gameObject))
+        {
+            currentOverlaps.Remove(other.gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -62,68 +67,107 @@ public class EnemyController : MonoBehaviour
             collider2d = (Collider2D)box2d;
         }
         myStatus = GetComponent<Status>();
-    }
-
+    } //Start()
     
 
-    // Update is called once per frame
     void Update()
     {
-        if(myStatus.hp <= 0)
-        {
-            Destroy(gameObject);
-        }
-
-        if (myStatus.stunTime > 0)
-        {
-            return;
-        }
-
-        //BoxCollider2D cameraBox = Camera.main.GetComponent<BoxCollider2D>();
-        //if (cameraBox != null) {
-        //    if (!collider2d.IsTouching(cameraBox))
-        //    {
-        //        Vector3 dir;// = Camera.main.transform.position - transform.position;
-        //        float vDistFromCamera = Camera.main.transform.position.y - transform.position.y;
-        //        float hDistFromCamera = Camera.main.transform.position.x - transform.position.x;
-        //        if (Mathf.Abs(vDistFromCamera) > Mathf.Abs(hDistFromCamera))
-        //        {
-        //            dir = new Vector3(0, vDistFromCamera, 0);
-        //        } else
-        //        {
-        //            dir = new Vector3(hDistFromCamera, 0, 0);
-        //        }
-
-        //        dir.Normalize();
-        //        moveCharacter(dir);
-        //    }
-        //}
-
-        GameObject target = GlobalCustom.aquireTarget(gameObject,"Player", 8);
-        if(target == null)
-        {
-            return;
-        }
-        Vector3 direction = home - transform.position;
-        direction.Normalize();
-        Vector3 targetDirection = target.transform.position - transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        rb.rotation = angle + rotationOffset;
-        movement = direction;
-    }
+        if(myStatus.hp <= 0) Destroy(gameObject);
+        
+        //Vector3 targetDirection = target.transform.position - transform.position;
+        //float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        //rb.rotation = angle + rotationOffset;
+        //movement = direction;
+    }//Update()
 
     private void FixedUpdate()
     {
-        if(goHome) { 
-            moveCharacter(movement);
+        if (myStatus.stunTime > 0) return;
+        UpdateTarget();
+        FaceTarget();
+        MoveAwayFromOverlaps();
+
+        switch (movementType)
+        {
+            case MoveType.GUARD:
+                GuardMovement();
+                break;
+            case MoveType.APPROACH:
+                ApproachMovement();
+                break;
+            case MoveType.PATROL:
+
+                break;
+
+        }
+        //if(movementType == MoveType.GUARD) { 
+        //    moveCharacter(movement);
+        //}
+    }//FixedUpdate()
+
+    void MoveAwayFromOverlaps()
+    {
+        if (currentOverlaps.Count <= 0) {
+            return;
+        }
+
+        foreach(GameObject overlappy in currentOverlaps)
+        {
+            Vector3 direction = overlappy.transform.position - transform.position;
+            direction.Normalize();
+            rb.AddForce(direction*socialDistanceSpeed*-1);
         }
     }
-    void moveCharacter(Vector2 direction)
+
+    void GuardMovement()
     {
-        if (myStatus.stunTime > 0) return;
+        Vector3 direction = home - transform.position;
+        direction.Normalize();
         rb.velocity = (direction * Mathf.Min(moveSpeed, moveSpeed * 2 * Mathf.Abs(home.magnitude - transform.position.magnitude)) * Time.deltaTime);
-        
     }
+
+    void ApproachMovement()
+    {
+        //Check distance from player
+        if (target == null) return;
+        float distance = Vector3.Distance(transform.position, target.transform.position);
+        if(distance > approachRange)
+        {
+            Vector3 direction = target.transform.position - transform.position;
+            direction.Normalize();
+            rb.AddForce(direction * moveSpeed);
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+        }
+        //If too far away add force up to a clamped speed (clamp magnitude of velocity)
+        //if not, reduce speed
+
+    }
+
+
+    void UpdateTarget()
+    {
+        target = GlobalCustom.aquireTarget(gameObject, "Player", detectRange);
+    }
+    void FaceTarget()
+    {
+        if (target == null) return;
+        Vector3 targetDirection = target.transform.position - transform.position;
+        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        rb.rotation = angle + rotationOffset;
+    }
+
+
+    void OnDrawGizmosSelected()
+    {
+        //Approach circle
+        Gizmos.color = new Color(1, 1, 0, 0.75f);
+        Gizmos.DrawWireSphere(transform.position, approachRange);
+
+        //Detect Range Circle
+        Gizmos.color = new Color(1, 1, 1, 0.75f);
+        Gizmos.DrawWireSphere(transform.position, detectRange);
+    }
+
 
 
 

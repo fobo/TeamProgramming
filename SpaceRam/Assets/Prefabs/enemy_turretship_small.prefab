@@ -148,8 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89e822c7e8646a49a2e90d86f7bb578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementType: 0
+  moveSpeed: 5
+  maxSpeed: 10
   rotationOffset: 0
-  goHome: 1
+  approachRange: 3
+  detectRange: 6
+  home: {x: 0, y: 0, z: 0}
+  patrolRoute: []
 --- !u!114 &5146223900550244948
 MonoBehaviour:
   m_ObjectHideFlags: 0

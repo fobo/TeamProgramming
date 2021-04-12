@@ -10,6 +10,7 @@ public class Status : MonoBehaviour
     public float stunTime = 0f;
     public bool hasLifeTime = false;
     public float lifeTime = 0;
+    //public float projInvincibilityTime = 0;
     public float invincibilityTime = 0;
     public float damage = 0f;
 
@@ -39,14 +40,8 @@ public class Status : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
-        if (stunTime > 0) { 
-            stunTime -= Time.deltaTime;
-        }
-
-        if (invincibilityTime > 0)
-        {
-            invincibilityTime -= Time.deltaTime;
-        }
+        if (stunTime > 0) stunTime -= Time.deltaTime;
+        if (invincibilityTime > 0) invincibilityTime -= Time.deltaTime;
+        //if (projInvincibilityTime > 0) projInvincibilityTime -= Time.deltaTime;
     }
 }

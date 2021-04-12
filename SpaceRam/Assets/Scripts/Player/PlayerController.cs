@@ -48,20 +48,23 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("My Magnitude: "+rb.velocity.magnitude);
 
-        if (myStatus.invincibilityTime > 0) return;
+        
 
         Status theirStatus = col.gameObject.GetComponent<Status>();
         Rigidbody2D col_rb = col.gameObject.GetComponent<Rigidbody2D>();
         float myMagnitude = rb.velocity.magnitude;
 
-        if (col.gameObject.tag == "Projectile")
+
+        if (col.gameObject.tag == "Projectile" /*&& myStatus.projInvincibilityTime <= 0*/)
         {
             SoundManagerScript.PlaySound("shipHitSound");
             float damage = theirStatus.damage;
             myStatus.hp -= damage;
-            myStatus.invincibilityTime = 0.1f; //1/10th of a second invicibility on projectiles
+            //myStatus.projInvincibilityTime = 0.1f; //1/10th of a second invicibility on projectiles
             mySprite.color = new Color(1f, 1f, 1f, .5f);
         }
+
+        if (myStatus.invincibilityTime > 0) return;
 
         if (!(theirStatus == null) && !(col_rb == null))
         {
