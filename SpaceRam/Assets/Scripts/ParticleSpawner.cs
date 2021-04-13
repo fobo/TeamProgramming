@@ -16,7 +16,7 @@ public class ParticleSpawner : MonoBehaviour
      */
 
     public float repeatDelay = 0.2f;
-    public float offset = 0.2f;
+    public float offset = 0f;
     public GameObject spawnee; //drag and drop the prefab into this in the inspector
     private float currDelay = 0f;
     private void Update()
