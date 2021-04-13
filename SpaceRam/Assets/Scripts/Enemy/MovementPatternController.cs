@@ -134,6 +134,9 @@ public class MovementPatternController : MonoBehaviour
                 Vector3 direction = overlappy.transform.position - transform.position;
                 direction.Normalize();
                 rb.AddForce(direction*socialDistanceSpeed*-1);
+            } else if(patternType == PatternType.PATROL && overlappy.tag == "Waypoint")
+            {
+                //check if this is the current waypoint intended to be approached
             }
         }
     }
