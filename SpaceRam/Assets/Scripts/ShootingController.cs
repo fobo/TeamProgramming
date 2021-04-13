@@ -12,7 +12,7 @@ public class ShootingController : MonoBehaviour
     private Vector2 direction;
     private float current_delay;
     public float Force = 100;
-    public EnemyController parentController;
+    public MovementPatternController parentController;
     public float shot_delay = 1f; //shot delay setting
     private float remaining_shot_delay = 0f;
     private bool isShooting = false;
@@ -20,8 +20,8 @@ public class ShootingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        current_delay = frequency_seconds;
-        parentController = gameObject.GetComponentInParent<EnemyController>();
+        current_delay = 0f;
+        parentController = gameObject.GetComponentInParent<MovementPatternController>();
     }
 
     

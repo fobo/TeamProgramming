@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class MovementPatternController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D box2d;
@@ -13,15 +13,22 @@ public class EnemyController : MonoBehaviour
     private GameObject target;
     private List<GameObject> currentOverlaps = new List<GameObject>();
 
-    public enum MoveType
+    public enum PatternType
     {
         GUARD, //Drifts back to a single point where it spawned
         APPROACH, //Heads towards the player but tries to keep a distance weakly
         PATROL
     };
 
+    public enum MoveType
+    {
+        MOMENTUM,
+        STRICT
+    };
+
     //public Transform ram_ship;
-    public MoveType movementType = MoveType.GUARD;
+    public PatternType patternType = PatternType.GUARD;
+    public MoveType moveType = MoveType.MOMENTUM;
     public float moveSpeed = 5f;
     public float maxSpeed = 10f;
     public float rotationOffset = 0f;
@@ -53,6 +60,7 @@ public class EnemyController : MonoBehaviour
     {
         home = gameObject.transform.position;
         rb = GetComponent<Rigidbody2D>();
+        
         box2d = GetComponent<BoxCollider2D>();
         capsule2d = GetComponent<CapsuleCollider2D>();
         if (box2d == null && capsule2d == null)
@@ -67,45 +75,54 @@ public class EnemyController : MonoBehaviour
             collider2d = (Collider2D)box2d;
         }
         myStatus = GetComponent<Status>();
-    } //Start()
+
+        if (rb == null)
+        {
+            Debug.Log("No Rigid Body, EnemyController deletes itself");
+            Destroy(gameObject);
+        }
+        if (collider2d == null)
+        {
+            Debug.Log("No 2D Collider, EnemyController deletes itself");
+            Destroy(gameObject);
+        }
+    }
     
 
     void Update()
     {
-        if(myStatus.hp <= 0) Destroy(gameObject);
-        
-        //Vector3 targetDirection = target.transform.position - transform.position;
-        //float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        //rb.rotation = angle + rotationOffset;
-        //movement = direction;
-    }//Update()
+        if (myStatus != null && myStatus.hasLifeTime != true) DieIfDead();
+    }
+
+    void DieIfDead()
+    {
+        if (myStatus.hp <= 0) Destroy(gameObject);
+    }
 
     private void FixedUpdate()
     {
-        if (myStatus.stunTime > 0) return;
+        //Don't do movement if stunned, but you can't be stunned without a status
+        if (myStatus != null && myStatus.stunTime > 0) return;
         UpdateTarget();
         FaceTarget();
-        MoveAwayFromOverlaps();
+        OverlapBehaviors();
 
-        switch (movementType)
+        switch (patternType)
         {
-            case MoveType.GUARD:
+            case PatternType.GUARD:
                 GuardMovement();
                 break;
-            case MoveType.APPROACH:
+            case PatternType.APPROACH:
                 ApproachMovement();
                 break;
-            case MoveType.PATROL:
+            case PatternType.PATROL:
 
                 break;
 
         }
-        //if(movementType == MoveType.GUARD) { 
-        //    moveCharacter(movement);
-        //}
-    }//FixedUpdate()
+    }
 
-    void MoveAwayFromOverlaps()
+    void OverlapBehaviors()
     {
         if (currentOverlaps.Count <= 0) {
             return;
@@ -113,17 +130,53 @@ public class EnemyController : MonoBehaviour
 
         foreach(GameObject overlappy in currentOverlaps)
         {
-            Vector3 direction = overlappy.transform.position - transform.position;
-            direction.Normalize();
-            rb.AddForce(direction*socialDistanceSpeed*-1);
+            if(overlappy.tag == "Enemy") { 
+                Vector3 direction = overlappy.transform.position - transform.position;
+                direction.Normalize();
+                rb.AddForce(direction*socialDistanceSpeed*-1);
+            }
         }
+    }
+
+    void MoveTowards(Vector3 goalPosition)
+    {
+        switch (moveType)
+        {
+            case MoveType.MOMENTUM:
+                MoveMomentum(goalPosition);
+                break;
+            case MoveType.STRICT:
+                MoveStrict(goalPosition);
+                break;
+        }
+    }
+
+    void MoveStrict(Vector3 goalPosition)
+    {
+        Vector3 direction = home - transform.position;
+        direction.Normalize();
+        rb.velocity = (direction * moveSpeed);
+        float distance = Vector3.Distance(goalPosition, transform.position);
+        if (distance <= rb.velocity.magnitude*Time.deltaTime)
+        {
+            rb.velocity = Vector2.zero;
+           transform.position = goalPosition;
+        }
+        
+    
+    }
+
+    void MoveMomentum(Vector3 goalPosition)
+    {
+
     }
 
     void GuardMovement()
     {
-        Vector3 direction = home - transform.position;
-        direction.Normalize();
-        rb.velocity = (direction * Mathf.Min(moveSpeed, moveSpeed * 2 * Mathf.Abs(home.magnitude - transform.position.magnitude)) * Time.deltaTime);
+        //Vector3 direction = home - transform.position;
+        //direction.Normalize();
+        //rb.velocity = (direction * Mathf.Min(moveSpeed, moveSpeed * 2 * Mathf.Abs(home.magnitude - transform.position.magnitude)) * Time.deltaTime);
+        MoveStrict(home); //change to movetowards
     }
 
     void ApproachMovement()

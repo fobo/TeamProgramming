@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1444882540549335450}
+  - component: {fileID: 6590958076212651867}
+  - component: {fileID: 504082487727955723}
   - component: {fileID: 4059209940385536813}
   - component: {fileID: 6697149454879974722}
   - component: {fileID: 5440114286518064086}
   - component: {fileID: 2317909807167453814}
   - component: {fileID: -214981254552912243}
-  - component: {fileID: 6590958076212651867}
   m_Layer: 9
   m_Name: missile1fix
   m_TagString: Projectile
@@ -36,6 +37,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6590958076212651867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863297885586326355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62a358481db9764eaae61c4773eeec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  repeatDelay: 0.2
+  offset: 0.2
+  spawnee: {fileID: 5230130664140772860, guid: 7e9cca904d46ca340966f7d2aa42b7d1, type: 3}
+--- !u!114 &504082487727955723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863297885586326355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89e822c7e8646a49a2e90d86f7bb578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patternType: 1
+  moveType: 0
+  moveSpeed: 10
+  maxSpeed: 5
+  rotationOffset: -90
+  approachRange: 0
+  detectRange: 4
+  socialDistanceSpeed: 3
+  home: {x: 0, y: 0, z: 0}
+  patrolRoute: []
 --- !u!212 &4059209940385536813
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -166,18 +204,3 @@ MonoBehaviour:
   lifeTime: 10
   invincibilityTime: 0
   damage: 5
---- !u!114 &6590958076212651867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863297885586326355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62a358481db9764eaae61c4773eeec9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  repeatDelay: 0.2
-  offset: 0.2
-  spawnee: {fileID: 5230130664140772860, guid: 7e9cca904d46ca340966f7d2aa42b7d1, type: 3}

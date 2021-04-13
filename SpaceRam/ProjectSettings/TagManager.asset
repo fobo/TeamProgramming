@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - ScoreTextTag
   - Portal
+  - Waypoint
   layers:
   - Default
   - TransparentFX

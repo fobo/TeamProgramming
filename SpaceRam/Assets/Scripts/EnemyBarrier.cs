@@ -18,4 +18,13 @@ public class EnemyBarrier : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        foreach (GameObject guard in guardians)
+        {
+            Gizmos.DrawLine(transform.position, guard.transform.position);
+        }
+    }
 }
