@@ -66,7 +66,7 @@ MonoBehaviour:
   patternType: 1
   moveType: 0
   moveSpeed: 10
-  maxSpeed: 2
+  maxSpeed: 3
   rotationOffset: -90
   approachRange: 0
   detectRange: 8

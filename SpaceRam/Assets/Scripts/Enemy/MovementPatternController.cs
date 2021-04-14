@@ -28,6 +28,7 @@ public class MovementPatternController : MonoBehaviour
     };
 
     //public Transform ram_ship;
+    public string targetTag = "Player";
     public PatternType patternType = PatternType.GUARD;
     public MoveType moveType = MoveType.MOMENTUM;
     public float moveSpeed = 5f;
@@ -44,7 +45,8 @@ public class MovementPatternController : MonoBehaviour
     private List<string> contactTags = new List<string>();
     public string[] contactTagsArray = { "Wall", "Player" };
     //List of tags that can be contacted for instant death
-    public Vector3[] patrolRoute; //change to special prefab array
+    public List<GameObject> patrolRoute; //change to special prefab array
+    private int currentWaypointIndex = 0;
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -86,9 +88,18 @@ public class MovementPatternController : MonoBehaviour
                 direction.Normalize();
                 rb.AddForce(direction * socialDistanceSpeed * -1);
             }
-            else if (patternType == PatternType.PATROL && overlappy.tag == "Waypoint")
+            else if (patternType == PatternType.PATROL && overlappy.tag == "Waypoint" && patrolRoute.Count > 0)
             {
                 //check if this is the current waypoint intended to be approached
+                if(overlappy.Equals(patrolRoute[currentWaypointIndex]))
+                {
+                    //Customize behaviors later, for now it just loops
+                    currentWaypointIndex += 1;
+                    if(currentWaypointIndex >= patrolRoute.Count)
+                    {
+                        currentWaypointIndex = 0;
+                    }
+                }
             }
         }
     }
@@ -154,7 +165,7 @@ public class MovementPatternController : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         //Debug.Log("Poop:");
         //Debug.Log(deathPoop);
@@ -182,7 +193,7 @@ public class MovementPatternController : MonoBehaviour
                 ApproachMovement();
                 break;
             case PatternType.PATROL:
-
+                PatrolMovement();
                 break;
 
         }
@@ -228,6 +239,21 @@ public class MovementPatternController : MonoBehaviour
         MoveTowards(home); //change to movetowards
     }
 
+    void PatrolMovement()
+    {
+        if(patrolRoute.Count <= 0)
+        {
+            return;
+        }
+
+        if (patrolRoute.Count <= currentWaypointIndex)
+        {
+            currentWaypointIndex = 0;
+        }
+
+        MoveTowards(patrolRoute[currentWaypointIndex].transform.position);
+    }
+
     void ApproachMovement()
     {
         //Check distance from player
@@ -249,11 +275,21 @@ public class MovementPatternController : MonoBehaviour
 
     void UpdateTarget()
     {
-        target = GlobalCustom.aquireTarget(gameObject, "Player", detectRange);
+        target = GlobalCustom.aquireTarget(gameObject, targetTag, detectRange);
+
     }
     void FaceTarget()
     {
-        if (target == null) return;
+        if (target == null)
+        {
+            if (rb.velocity != Vector2.zero)
+            {
+                float moveAngle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(moveAngle - 90, Vector3.forward);
+            }
+
+            return;
+        }
         Vector3 targetDirection = target.transform.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         rb.rotation = angle + rotationOffset;

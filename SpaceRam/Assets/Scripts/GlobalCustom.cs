@@ -11,6 +11,7 @@ public class GlobalCustom : MonoBehaviour
 
     public static GameObject aquireTarget(GameObject me, string tag, float range)
     {
+        if (tag == "notag") return null;
 
         GameObject[] possibleTargets = GameObject.FindGameObjectsWithTag(tag);
         if (possibleTargets.Length == 0)

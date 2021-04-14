@@ -72,7 +72,11 @@ public class ShootingController : MonoBehaviour
         direction = targetPos - (Vector2)transform.position;
 
         GameObject newBullet = Instantiate(projectile, transform.position, Quaternion.LookRotation(Vector3.forward, direction));
-        newBullet.GetComponent<Rigidbody2D>().AddForce(direction.normalized * Force);
+        Rigidbody2D newRB = newBullet.GetComponent<Rigidbody2D>();
+        if (newRB != null)
+        {
+            newRB.AddForce(direction.normalized * Force);
+        }
     }
 
     private void OnDrawGizmos()

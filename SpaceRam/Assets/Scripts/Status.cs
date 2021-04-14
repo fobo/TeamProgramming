@@ -37,7 +37,15 @@ public class Status : MonoBehaviour
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
-                Destroy(gameObject);
+                MovementPatternController mpc = gameObject.GetComponent<MovementPatternController>();
+                if(mpc != null)
+                {
+                    mpc.Die();
+                }
+                else 
+                { 
+                    Destroy(gameObject);
+                }
             }
         }
         if (stunTime > 0) stunTime -= Time.deltaTime;
