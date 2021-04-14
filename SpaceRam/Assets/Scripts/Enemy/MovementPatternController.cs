@@ -11,6 +11,7 @@ public class MovementPatternController : MonoBehaviour
     private Vector2 movement;
     private Status myStatus;
     private GameObject target;
+    private Vector3 moveGoal;
     private List<GameObject> currentOverlaps = new List<GameObject>();
 
     public enum PatternType
@@ -34,8 +35,15 @@ public class MovementPatternController : MonoBehaviour
     public float rotationOffset = 0f;
     public float approachRange = 4f;
     public float detectRange = 6f;
-    public float socialDistanceSpeed = 3f;
+    public float socialDistanceSpeed = 100f;
+    public GameObject deathPoop;
+    public bool instantDieOnContact = false;
     public Vector3 home;
+    private List<string> socialDistanceTags = new List<string>();
+    public string[] socialDistanceTagsArray = { "Enemy" };
+    private List<string> contactTags = new List<string>();
+    public string[] contactTagsArray = { "Wall", "Player" };
+    //List of tags that can be contacted for instant death
     public Vector3[] patrolRoute; //change to special prefab array
 
 
@@ -55,7 +63,39 @@ public class MovementPatternController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    void OverlapBehaviors()
+    {
+        if (currentOverlaps.Count <= 0)
+        {
+            return;
+        }
+
+        foreach (GameObject overlappy in currentOverlaps)
+        {
+            if (instantDieOnContact && contactTags.Contains(overlappy.tag))
+            {
+                Die();
+                return;
+            }
+
+
+            if (socialDistanceTags.Contains(overlappy.tag))
+            {
+                Debug.Log("OVERLAP");
+                Vector3 direction = overlappy.transform.position - transform.position;
+                direction.Normalize();
+                rb.AddForce(direction * socialDistanceSpeed * -1);
+            }
+            else if (patternType == PatternType.PATROL && overlappy.tag == "Waypoint")
+            {
+                //check if this is the current waypoint intended to be approached
+            }
+        }
+    }
+
+
+
+
     void Start()
     {
         home = gameObject.transform.position;
@@ -86,6 +126,18 @@ public class MovementPatternController : MonoBehaviour
             Debug.Log("No 2D Collider, EnemyController deletes itself");
             Destroy(gameObject);
         }
+
+        //List of tags that can be contacted for instant death
+
+        foreach (string contactTag in contactTagsArray)
+        {
+            contactTags.Add(contactTag);
+        }
+        foreach (string socialDistanceTag in socialDistanceTagsArray)
+        {
+            socialDistanceTags.Add(socialDistanceTag);
+        }
+
     }
     
 
@@ -96,7 +148,21 @@ public class MovementPatternController : MonoBehaviour
 
     void DieIfDead()
     {
-        if (myStatus.hp <= 0) Destroy(gameObject);
+        if (myStatus.hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        //Debug.Log("Poop:");
+        //Debug.Log(deathPoop);
+        if (deathPoop != null)
+        {
+            Instantiate(deathPoop, (Vector2)transform.position, new Quaternion(0, 0, 0, 0));
+        }
+        Destroy(gameObject);
     }
 
     private void FixedUpdate()
@@ -122,24 +188,6 @@ public class MovementPatternController : MonoBehaviour
         }
     }
 
-    void OverlapBehaviors()
-    {
-        if (currentOverlaps.Count <= 0) {
-            return;
-        }
-
-        foreach(GameObject overlappy in currentOverlaps)
-        {
-            if(overlappy.tag == "Enemy") { 
-                Vector3 direction = overlappy.transform.position - transform.position;
-                direction.Normalize();
-                rb.AddForce(direction*socialDistanceSpeed*-1);
-            } else if(patternType == PatternType.PATROL && overlappy.tag == "Waypoint")
-            {
-                //check if this is the current waypoint intended to be approached
-            }
-        }
-    }
 
     void MoveTowards(Vector3 goalPosition)
     {
@@ -156,7 +204,7 @@ public class MovementPatternController : MonoBehaviour
 
     void MoveStrict(Vector3 goalPosition)
     {
-        Vector3 direction = home - transform.position;
+        Vector3 direction = goalPosition - transform.position;
         direction.Normalize();
         rb.velocity = (direction * moveSpeed);
         float distance = Vector3.Distance(goalPosition, transform.position);
@@ -165,21 +213,19 @@ public class MovementPatternController : MonoBehaviour
             rb.velocity = Vector2.zero;
            transform.position = goalPosition;
         }
-        
-    
     }
 
     void MoveMomentum(Vector3 goalPosition)
     {
-
+        Vector3 direction = goalPosition - transform.position;
+        direction.Normalize();
+        rb.AddForce(direction * moveSpeed);
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
     }
 
     void GuardMovement()
     {
-        //Vector3 direction = home - transform.position;
-        //direction.Normalize();
-        //rb.velocity = (direction * Mathf.Min(moveSpeed, moveSpeed * 2 * Mathf.Abs(home.magnitude - transform.position.magnitude)) * Time.deltaTime);
-        MoveStrict(home); //change to movetowards
+        MoveTowards(home); //change to movetowards
     }
 
     void ApproachMovement()
@@ -189,10 +235,11 @@ public class MovementPatternController : MonoBehaviour
         float distance = Vector3.Distance(transform.position, target.transform.position);
         if(distance > approachRange)
         {
-            Vector3 direction = target.transform.position - transform.position;
-            direction.Normalize();
-            rb.AddForce(direction * moveSpeed);
-            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+            MoveTowards(target.transform.position);
+            //Vector3 direction = target.transform.position - transform.position;
+            //direction.Normalize();
+            //rb.AddForce(direction * moveSpeed);
+            //rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
         }
         //If too far away add force up to a clamped speed (clamp magnitude of velocity)
         //if not, reduce speed

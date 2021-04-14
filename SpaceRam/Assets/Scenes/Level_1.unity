@@ -6221,10 +6221,6 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4137803063491501370, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
-      propertyPath: moveType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4137803063491501371, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.93
@@ -6276,10 +6272,10 @@ PrefabInstance:
     - target: {fileID: 8561373273858205283, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
       propertyPath: projectile
       value: 
-      objectReference: {fileID: 2979019564754270791, guid: 53d2ff6731caa6e4ea7a7f8afdffdc26, type: 3}
+      objectReference: {fileID: 863297885586326355, guid: 34599123c195764499701a8af42d2417, type: 3}
     - target: {fileID: 8561373273858205283, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
       propertyPath: frequency_seconds
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 992f086a60d865547a166fdca86d1d61, type: 3}

@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
 
-        Debug.Log("My Magnitude: "+rb.velocity.magnitude);
+        //Debug.Log("My Magnitude: "+rb.velocity.magnitude);
 
         
 
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
             float theirHP = theirStatus.hp;
             float theirDamage = myMagnitude; //last var makes it so only half your hp is doing damage
             float myDamage = myMagnitude/10; //last variable makes it so enemies only use a fraction of their hp to damage
-            Debug.Log("My Damage: " + myDamage);
+            //Debug.Log("My Damage: " + myDamage);
             float killBonus =  0; //reduces damage if enemy dies
 
             if (col.gameObject.tag == "Enemy")
@@ -83,7 +83,8 @@ public class PlayerController : MonoBehaviour
                     SoundManagerScript.PlaySound("shipKillEnemySound");
                     gameManager.UpdateScore(10);
                     killBonus = 0.5f; //take half damage if they get killed
-                    Destroy(col.gameObject);
+                    theirStatus.hp = 0;
+                    //Destroy(col.gameObject);
                 }
                 else
                 {
