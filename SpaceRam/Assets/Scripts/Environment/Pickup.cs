@@ -10,16 +10,20 @@ public class Pickup : MonoBehaviour
     {
         healSmall, // 10 hp
         healLarge,  // 20 hp
-        levelChange
+        levelChange,
+        coin
     }
     public Type type = Type.healSmall;
     public Sprite sprHealSmall, sprHealLarge, sprLevelChange;
     public string levelName = "Debug_Level";
+    public int pointValue;
+    private GameManager gameManager;
 
     private void Start()
     {
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         //spriteRenderer.sprite = newSprite; 
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         
 
@@ -34,6 +38,8 @@ public class Pickup : MonoBehaviour
                 case (Type.levelChange):
                     sprite.sprite = sprLevelChange;
                     break;
+            default:
+                break;
 
         }
     }
@@ -53,6 +59,9 @@ public class Pickup : MonoBehaviour
                 case (Type.levelChange):
                     SceneManager.LoadScene(levelName);
                     break;
+                case (Type.coin):
+                    addScore(collision, pointValue);
+                    break;
             }
         }
     }
@@ -64,5 +73,11 @@ public class Pickup : MonoBehaviour
         collision.gameObject.GetComponent<Status>().hp += healAmount;
             Destroy(gameObject);
         
+    }
+    private void addScore(Collider2D collision, int point)
+    {
+        //add sound effects here (Maybe cooler sound effects for more points?
+        gameManager.UpdateScore(point); // adds to score total
+        Destroy(gameObject);
     }
 }
