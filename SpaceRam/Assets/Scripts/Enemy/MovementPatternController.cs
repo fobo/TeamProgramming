@@ -329,6 +329,21 @@ public class MovementPatternController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectRange);
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        if (patternType != PatternType.PATROL || patrolRoute.Count <= 0) return;
+
+        Vector3 previous = transform.position;
+
+        foreach(GameObject waypoint in patrolRoute)
+        {
+            Vector3 current = waypoint.transform.position;
+            Gizmos.DrawLine(previous, current);
+            previous = current;
+        }
+    }
+
 
 
 
