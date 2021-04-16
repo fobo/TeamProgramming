@@ -16,7 +16,7 @@ public class CameraBehaviors : MonoBehaviour
         } 
             
             
-        transform.position = new Vector3(target.GetComponent<Transform>().position.x, transform.position.y, transform.position.z);
+        transform.position = new Vector3(target.GetComponent<Transform>().position.x, target.GetComponent<Transform>().position.y, transform.position.z);
         
 
     }

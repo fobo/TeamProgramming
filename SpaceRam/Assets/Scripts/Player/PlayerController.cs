@@ -170,18 +170,18 @@ public class PlayerController : MonoBehaviour
             curDashPower = 0;
         }
 
-        Camera camera = Camera.main;
-        float topBoundary = 5;
-        float bottomBoundary = -5;
+        //Camera camera = Camera.main;
+        //float topBoundary = 5;
+        //float bottomBoundary = -5;
         
-        if (transform.position.y > topBoundary ||
-            transform.position.y < bottomBoundary)
-        {
-            //Bounce();
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * -1);
-            transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary, topBoundary), 0);
+        //if (transform.position.y > topBoundary ||
+        //    transform.position.y < bottomBoundary)
+        //{
+        //    //Bounce();
+        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * -1);
+        //    transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, bottomBoundary, topBoundary), 0);
 
-        }
+        //}
     }
 
     //void Bounce() {

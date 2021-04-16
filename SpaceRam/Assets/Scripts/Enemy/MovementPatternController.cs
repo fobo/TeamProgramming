@@ -49,6 +49,24 @@ public class MovementPatternController : MonoBehaviour
     private int currentWaypointIndex = 0;
 
 
+    public void setWaypointIndex(int i)
+    {
+        currentWaypointIndex = i;
+    }
+
+    public int getWaypointIndex()
+    {
+        return currentWaypointIndex;
+    }
+    public void changeToNextWaypoint()
+    {
+        currentWaypointIndex += 1;
+        if (currentWaypointIndex >= patrolRoute.Count)
+        {
+            currentWaypointIndex = 0;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(!currentOverlaps.Contains(other.gameObject))
@@ -93,12 +111,18 @@ public class MovementPatternController : MonoBehaviour
                 //check if this is the current waypoint intended to be approached
                 if(overlappy.Equals(patrolRoute[currentWaypointIndex]))
                 {
-                    //Customize behaviors later, for now it just loops
-                    currentWaypointIndex += 1;
-                    if(currentWaypointIndex >= patrolRoute.Count)
+
+                    PatrolWaypoint waypoint = overlappy.GetComponent<PatrolWaypoint>();
+                    if(waypoint!= null)
                     {
-                        currentWaypointIndex = 0;
+                        waypoint.ExecuteBehavior(gameObject);
                     }
+                    ////Customize behaviors later, for now it just loops
+                    //currentWaypointIndex += 1;
+                    //if(currentWaypointIndex >= patrolRoute.Count)
+                    //{
+                    //    currentWaypointIndex = 0;
+                    //}
                 }
             }
         }
@@ -241,10 +265,8 @@ public class MovementPatternController : MonoBehaviour
 
     void PatrolMovement()
     {
-        if(patrolRoute.Count <= 0)
-        {
-            return;
-        }
+        //If currentWaypointIndex is negative or there are no waypoints in the array, don't execute
+        if (currentWaypointIndex < 0 || patrolRoute.Count <= 0) return;
 
         if (patrolRoute.Count <= currentWaypointIndex)
         {
