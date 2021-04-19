@@ -20,7 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/kevin_level_2-5.unity
     guid: 6a9f209eb47711e41a537c7f3a4ca927
-  - enabled: 1
-    path: Assets/Scenes/kevin_level_3.unity
-    guid: d2cd168df58748c49a09f4ab2d16b841
   m_configObjects: {}
