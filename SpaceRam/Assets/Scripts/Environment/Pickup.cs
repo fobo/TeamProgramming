@@ -77,6 +77,7 @@ public class Pickup : MonoBehaviour
     private void addScore(Collider2D collision, int point)
     {
         //add sound effects here (Maybe cooler sound effects for more points?
+        SoundManagerScript.PlaySound("shipCollectCoin");
         gameManager.UpdateScore(point); // adds to score total
         Destroy(gameObject);
     }
