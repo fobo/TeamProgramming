@@ -338,6 +338,7 @@ public class MovementPatternController : MonoBehaviour
 
         foreach(GameObject waypoint in patrolRoute)
         {
+            if (waypoint == null) continue;
             Vector3 current = waypoint.transform.position;
             Gizmos.DrawLine(previous, current);
             previous = current;

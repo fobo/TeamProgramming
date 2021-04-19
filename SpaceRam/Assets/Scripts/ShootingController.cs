@@ -5,6 +5,17 @@ using UnityEngine;
 public class ShootingController : MonoBehaviour
 {
 
+    public enum TargetType
+    {
+        PARENTS,
+        CUSTOM,
+        NONE
+    };
+
+    public TargetType targetType = TargetType.PARENTS;
+    public float customRange = 8;
+    public string targetTag = "Player";
+
     public GameObject projectile;
     public float frequency_seconds = 1;
     public float variation_seconds = 0f;
@@ -24,7 +35,7 @@ public class ShootingController : MonoBehaviour
         parentController = gameObject.GetComponentInParent<MovementPatternController>();
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
@@ -37,17 +48,19 @@ public class ShootingController : MonoBehaviour
         if (isShooting)
         {
             remaining_shot_delay -= Time.deltaTime;
-            if(remaining_shot_delay <= 0)
+            if (remaining_shot_delay <= 0)
             {
                 isShooting = false;
                 FireProjectile();
 
-            } else
+            }
+            else
             {
-                float scaleAmt = 2*(1 - (remaining_shot_delay / shot_delay));
+                float scaleAmt = 2 * (1 - (remaining_shot_delay / shot_delay));
                 transform.localScale = new Vector3(scaleAmt, scaleAmt, scaleAmt);
             }
-        } else
+        }
+        else
         {
             transform.localScale = new Vector3(0, 0, 0);
         }
@@ -57,16 +70,41 @@ public class ShootingController : MonoBehaviour
         {
             isShooting = true;
             remaining_shot_delay = shot_delay;
-            current_delay = frequency_seconds + Random.Range(variation_seconds*-1, variation_seconds);
+            current_delay = frequency_seconds + Random.Range(variation_seconds * -1, variation_seconds);
         }
     }
-   
 
+
+    GameObject AquireTarget()
+    {
+        GameObject closest = null;
+        if (targetType == TargetType.PARENTS)
+        {
+            if (parentController == null)
+            {
+                closest = GlobalCustom.aquireTarget(gameObject, targetTag, customRange);
+                
+            }
+            else
+            {
+                closest = GlobalCustom.aquireTarget(gameObject, parentController.targetTag, parentController.detectRange);
+            }
+
+        }
+        else if (targetType == TargetType.CUSTOM)
+        {
+            closest = GlobalCustom.aquireTarget(gameObject, targetTag, customRange);
+        }
+
+        return closest;
+    }
 
     void FireProjectile()
     {
-        GameObject closest = GlobalCustom.aquireTarget(gameObject, "Player",8);
+        GameObject closest = AquireTarget();
         if (closest == null) return;
+
+
 
         Vector2 targetPos = closest.transform.position;
         direction = targetPos - (Vector2)transform.position;
@@ -82,5 +120,15 @@ public class ShootingController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, 0.1f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, customRange);
+        GameObject closest = AquireTarget();
+        if (closest == null) return;
+        Gizmos.DrawLine(transform.position, closest.transform.position);
     }
 }

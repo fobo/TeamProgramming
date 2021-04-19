@@ -258,7 +258,7 @@ MonoBehaviour:
   hp_regen: 0
   stunTime: 0
   hasLifeTime: 1
-  lifeTime: 2
+  lifeTime: 20
   invincibilityTime: 0
   damage: 2
 --- !u!114 &-4915913998717099268
