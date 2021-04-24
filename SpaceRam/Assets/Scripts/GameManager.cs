@@ -56,11 +56,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver() {
-        restartButton.gameObject.SetActive(true);
-        gameOverText.gameObject.SetActive(true);
-        playerName.gameObject.SetActive(true);
-        submitButton.gameObject.SetActive(true);
-        highScoresWeb.gameObject.SetActive(true);
+        if (restartButton) restartButton.gameObject.SetActive(true);
+        if (gameOverText) gameOverText.gameObject.SetActive(true);
+        if (playerName) playerName.gameObject.SetActive(true);
+        if (submitButton) submitButton.gameObject.SetActive(true);
+        if (highScoresWeb) highScoresWeb.gameObject.SetActive(true);
         isGameActive = false;
     }
 

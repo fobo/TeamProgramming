@@ -156,6 +156,7 @@ public class ShootingController : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, customRange);
+        Gizmos.color = Color.green;
         GameObject closest = AquireTarget();
         if (closest == null) return;
         Gizmos.DrawLine(transform.position, closest.transform.position);
