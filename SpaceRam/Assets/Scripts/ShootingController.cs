@@ -15,6 +15,7 @@ public class ShootingController : MonoBehaviour
     public TargetType targetType = TargetType.PARENTS;
     public float customRange = 8;
     public string targetTag = "Player";
+    public GameObject manualTarget = null;
 
     public GameObject projectile;
     public float delay_between_shots = 1;
@@ -83,6 +84,11 @@ public class ShootingController : MonoBehaviour
 
     GameObject AquireTarget()
     {
+        if (manualTarget != null)
+        {
+            return manualTarget;
+        }
+
         GameObject closest = null;
         if (targetType == TargetType.PARENTS)
         {
