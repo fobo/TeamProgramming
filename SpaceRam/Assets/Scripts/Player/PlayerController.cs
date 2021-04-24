@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickPoint;
     float rotationSpeed;
-    float maxDashPower = 500;
-    float curDashPower = 0;
+    float maxDashPower = 500; //50 == 1 magnitude
+    float storedDashPower = 0;
     float bonkTimer = 0.5f;
 
 
@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+
+        //Debug.Log(rb.velocity.magnitude);
         if (myStatus.hp <= 0)
         {
             SoundManagerScript.PlaySound("shipDieSound");
@@ -141,7 +143,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity -= (rb.velocity * 4) * Time.deltaTime;
             rb.angularVelocity = 0;
 
-            curDashPower = Mathf.Clamp(curDashPower + (maxDashPower * Time.deltaTime), maxDashPower / 4, maxDashPower);
+            storedDashPower = Mathf.Clamp(storedDashPower + (maxDashPower * Time.deltaTime), maxDashPower / 4, maxDashPower);
 
         } else
         {
@@ -154,7 +156,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Debug.Log(Mathf.Round((curDashPower / maxDashPower)));
-        anim.Play("ram_ship", 0, (curDashPower / maxDashPower) * .999f); ; ; ; ; ; ;
+        anim.Play("ram_ship", 0, (storedDashPower / maxDashPower) * .999f); ; ; ; ; ; ;
 
         if (Input.GetMouseButton(1))
         {
@@ -163,11 +165,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            //500 dash power, 50 == 1 magnitude
             //Debug.Log(transform.forward * dashPower);
             transform.rotation = Quaternion.LookRotation(Vector3.forward, clickPoint - transform.position);
+            float currentDashPower = rb.velocity.magnitude * 50;
+            if (storedDashPower < currentDashPower)
+            {
+                storedDashPower = currentDashPower;
+            }
             rb.velocity = Vector2.zero;
-            rb.AddForce(transform.up * curDashPower);
-            curDashPower = 0;
+            rb.AddForce(transform.up * storedDashPower); 
+            storedDashPower = 0;
         }
 
         //Camera camera = Camera.main;

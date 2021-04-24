@@ -17,7 +17,7 @@ public class ShootingController : MonoBehaviour
     public string targetTag = "Player";
 
     public GameObject projectile;
-    public float frequency_seconds = 1;
+    public float delay_between_shots = 1;
     public float variation_seconds = 0f;
     //public Transform Target;
     private Vector2 direction;
@@ -70,7 +70,7 @@ public class ShootingController : MonoBehaviour
         {
             isShooting = true;
             remaining_shot_delay = shot_delay;
-            current_delay = frequency_seconds + Random.Range(variation_seconds * -1, variation_seconds);
+            current_delay = delay_between_shots + Random.Range(variation_seconds * -1, variation_seconds);
         }
     }
 
