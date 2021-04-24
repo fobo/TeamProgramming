@@ -84,29 +84,46 @@ public class ShootingController : MonoBehaviour
 
     GameObject AquireTarget()
     {
+        float range = customRange;
+        if (targetType == TargetType.PARENTS && parentController != null)
+        {
+            range = parentController.detectRange;
+        }
+
+        string tag = targetTag;
+        if (targetType == TargetType.PARENTS && parentController != null)
+        {
+            tag = parentController.targetTag;
+        }
+
         if (manualTarget != null)
         {
-            return manualTarget;
+            if (Vector3.Distance(manualTarget.transform.position,transform.position) <= range)
+            { 
+                return manualTarget;
+            }
         }
 
-        GameObject closest = null;
-        if (targetType == TargetType.PARENTS)
-        {
-            if (parentController == null)
-            {
-                closest = GlobalCustom.aquireTarget(gameObject, targetTag, customRange);
+        GameObject closest = GlobalCustom.aquireTarget(gameObject, tag, range);
+
+
+        //if (targetType == TargetType.PARENTS)
+        //{
+        //    if (parentController == null)
+        //    {
+        //        closest = GlobalCustom.aquireTarget(gameObject, targetTag, customRange);
                 
-            }
-            else
-            {
-                closest = GlobalCustom.aquireTarget(gameObject, parentController.targetTag, parentController.detectRange);
-            }
+        //    }
+        //    else
+        //    {
+        //        closest = GlobalCustom.aquireTarget(gameObject, parentController.targetTag, parentController.detectRange);
+        //    }
 
-        }
-        else if (targetType == TargetType.CUSTOM)
-        {
-            closest = GlobalCustom.aquireTarget(gameObject, targetTag, customRange);
-        }
+        //}
+        //else if (targetType == TargetType.CUSTOM)
+        //{
+        //    closest = GlobalCustom.aquireTarget(gameObject, targetTag, customRange);
+        //}
 
         return closest;
     }
