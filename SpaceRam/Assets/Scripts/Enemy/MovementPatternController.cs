@@ -101,7 +101,7 @@ public class MovementPatternController : MonoBehaviour
 
             if (socialDistanceTags.Contains(overlappy.tag))
             {
-                Debug.Log("OVERLAP");
+                //Debug.Log("OVERLAP");
                 Vector3 direction = overlappy.transform.position - transform.position;
                 direction.Normalize();
                 rb.AddForce(direction * socialDistanceSpeed * -1);
