@@ -90,8 +90,9 @@ public class MovementPatternController : MonoBehaviour
             return;
         }
 
-        foreach (GameObject overlappy in currentOverlaps)
+        for (int i = 0;i< currentOverlaps.Count;i++)
         {
+            GameObject overlappy = currentOverlaps[i];
             if (instantDieOnContact && contactTags.Contains(overlappy.tag))
             {
                 Die();

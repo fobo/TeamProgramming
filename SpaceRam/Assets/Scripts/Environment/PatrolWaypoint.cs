@@ -12,6 +12,7 @@ public class PatrolWaypoint : MonoBehaviour
         CONTINUE,
         STOP,
         REVERSE,
+        DIE
     };
 
     public Behavior behavior = Behavior.CONTINUE;
@@ -37,7 +38,15 @@ public class PatrolWaypoint : MonoBehaviour
             case Behavior.REVERSE:
                 Reverse(tourist, mpc);
                 break;
+            case Behavior.DIE:
+                Die(tourist, mpc);
+                break;
         }
+    }
+
+    public void Die(GameObject tourist, MovementPatternController mpc)
+    {
+        mpc.Die();
     }
 
     public void Continue(GameObject tourist, MovementPatternController mpc)
