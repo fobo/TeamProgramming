@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 clickPoint;
     float rotationSpeed;
-    float maxDashPower = 500; //50 == 1 magnitude
+    public float maxDashPower = 500; //50 == 1 magnitude
     float storedDashPower = 0;
     float bonkTimer = 0.5f;
 

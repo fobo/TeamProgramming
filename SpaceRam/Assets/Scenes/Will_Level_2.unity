@@ -1676,7 +1676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7599739430294444138, guid: fc88d38b147faef4fb126a323fe53e68, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7599739430294444138, guid: fc88d38b147faef4fb126a323fe53e68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2491,11 +2491,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4528433891888237387, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 4528433891888237387, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -25
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4528433891888237387, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2533,13 +2533,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4528433891888237387, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.6068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528433891888237387, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 8.6068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4528433891888237387, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.6068
+      objectReference: {fileID: 0}
     - target: {fileID: 4528433891888237428, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
       propertyPath: m_Name
       value: BoostArrow
       objectReference: {fileID: 0}
     - target: {fileID: 5266271945032833488, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
       propertyPath: boostAmt
-      value: 200
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266271945032833488, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
+      propertyPath: boostMaxAmt
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266271945032833488, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
+      propertyPath: boostMaxMagnitude
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c36df8c7c2809c49bf3be00deca5de6, type: 3}
