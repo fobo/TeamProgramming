@@ -5,7 +5,8 @@ using UnityEngine;
 public class Boost : MonoBehaviour
 {
 
-    public float boostAmt = 0;
+    public float boostAmt = 0; //50 to 1 magnitude a frame
+    public float boostMaxMagnitude = -1;
     private Rigidbody2D rb = null;
     private bool playerIsColliding = false;
 
@@ -32,7 +33,32 @@ public class Boost : MonoBehaviour
     {
         if (rb != null && playerIsColliding == true)
         {
-            rb.AddForce((Vector2)transform.right * boostAmt);
+            if(boostMaxMagnitude == -1)
+            {
+                rb.AddForce((Vector2)transform.right * boostAmt);
+
+            } else
+            {
+                Vector3 rbV = rb.velocity;
+                Vector3 rbVnorm = rb.velocity.normalized;
+                Vector3 correctDirNorm = transform.right;
+
+                float magInBoostDir = Vector3.Dot(rbV, correctDirNorm);
+                
+                Vector3 projection = magInBoostDir * rbVnorm;
+                Vector3 clampedProjection = Vector3.ClampMagnitude(projection, boostMaxMagnitude);
+                Debug.Log(magInBoostDir); //50 on add force == 1 vel magnitude
+
+                if(magInBoostDir >= boostMaxMagnitude)
+                {
+                    rb.velocity = ((Vector3)rb.velocity - projection) + clampedProjection;
+                    return;
+                } else
+                {
+                    rb.AddForce((Vector2)transform.right * boostAmt);
+                }
+            }
+
         }
         //rb.velocity = rb.velocity + (Vector2)transform.right * boostAmt;
     }

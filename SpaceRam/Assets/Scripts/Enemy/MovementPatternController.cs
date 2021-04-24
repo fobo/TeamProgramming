@@ -337,8 +337,10 @@ public class MovementPatternController : MonoBehaviour
 
         Vector3 previous = transform.position;
 
-        foreach(GameObject waypoint in patrolRoute)
+        for (int i = currentWaypointIndex; i < patrolRoute.Count;i++)
         {
+            if (i >= patrolRoute.Count) return;
+            GameObject waypoint = patrolRoute[i];
             if (waypoint == null) continue;
             Vector3 current = waypoint.transform.position;
             Gizmos.DrawLine(previous, current);
