@@ -37,6 +37,18 @@ public class Status : MonoBehaviour
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0)
             {
+
+                foreach( Transform child in transform)
+                {
+                    MovementPatternController child_mpc = child.gameObject.GetComponent<MovementPatternController>();
+                    if (child_mpc != null)
+                    {
+                        child_mpc.Die();
+                    }
+                }
+
+
+
                 MovementPatternController mpc = gameObject.GetComponent<MovementPatternController>();
                 if(mpc != null)
                 {

@@ -9,11 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4137803063491501371}
+  - component: {fileID: 4137803063491501370}
   - component: {fileID: 4137803063491501368}
   - component: {fileID: 4137803063491501369}
   - component: {fileID: 4137803063491501374}
-  - component: {fileID: 4137803063491501370}
-  - component: {fileID: 5146223900550244948}
   - component: {fileID: 1659049357222362452}
   m_Layer: 8
   m_Name: enemy_turretship_small
@@ -38,6 +37,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4137803063491501370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4137803063491501375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89e822c7e8646a49a2e90d86f7bb578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Player
+  patternType: 0
+  moveType: 1
+  moveSpeed: 5
+  maxSpeed: 10
+  rotationOffset: 0
+  approachRange: 3
+  detectRange: 6
+  socialDistanceSpeed: 3
+  deathPoop: {fileID: 0}
+  instantDieOnContact: 0
+  home: {x: 0, y: 0, z: 0}
+  socialDistanceTagsArray:
+  - Enemy
+  contactTagsArray:
+  - Wall
+  - Player
+  patrolRoute: []
 --- !u!212 &4137803063491501368
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,42 +165,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4137803063491501370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4137803063491501375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d89e822c7e8646a49a2e90d86f7bb578, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patternType: 0
-  moveType: 1
-  moveSpeed: 5
-  maxSpeed: 10
-  rotationOffset: 0
-  approachRange: 3
-  detectRange: 6
-  socialDistanceSpeed: 3
-  deathPoop: {fileID: 0}
-  instantDieOnContact: 0
-  home: {x: 0, y: 0, z: 0}
-  patrolRoute: []
---- !u!114 &5146223900550244948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4137803063491501375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30efac12ec63223418ab3eab4e14aded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1659049357222362452
 MonoBehaviour:
   m_ObjectHideFlags: 0

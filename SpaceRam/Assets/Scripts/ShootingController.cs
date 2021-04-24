@@ -56,6 +56,12 @@ public class ShootingController : MonoBehaviour
             }
             else
             {
+                GameObject closest = AquireTarget();
+                if (closest == null)
+                {
+                    remaining_shot_delay = 0;
+                    isShooting = false;
+                }
                 float scaleAmt = 2 * (1 - (remaining_shot_delay / shot_delay));
                 transform.localScale = new Vector3(scaleAmt, scaleAmt, scaleAmt);
             }
