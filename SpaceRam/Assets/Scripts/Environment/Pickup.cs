@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Pickup : MonoBehaviour
 {
-
+    
     public enum Type
     {
         healSmall, // 10 hp
