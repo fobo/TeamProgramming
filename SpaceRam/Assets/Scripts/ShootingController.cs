@@ -23,6 +23,7 @@ public class ShootingController : MonoBehaviour
     //public Transform Target;
     private Vector2 direction;
     private float current_delay;
+    public float projectileRotationOffsetCW = 0; //clockwise
     public float Force = 100;
     public MovementPatternController parentController;
     public float shot_delay = 1f; //shot delay setting
@@ -32,6 +33,7 @@ public class ShootingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         current_delay = 0f;
         parentController = gameObject.GetComponentInParent<MovementPatternController>();
     }
@@ -139,6 +141,7 @@ public class ShootingController : MonoBehaviour
         direction = targetPos - (Vector2)transform.position;
 
         GameObject newBullet = Instantiate(projectile, transform.position, Quaternion.LookRotation(Vector3.forward, direction));
+        newBullet.transform.Rotate(0, 0, projectileRotationOffsetCW);
         Rigidbody2D newRB = newBullet.GetComponent<Rigidbody2D>();
         if (newRB != null)
         {

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8869335248387571311}
   - component: {fileID: 8869335248387571282}
   m_Layer: 0
-  m_Name: Pickup
+  m_Name: healSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,3 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  sprHealSmall: {fileID: 21300000, guid: 79d70dae5942f65408a02be078cf12f1, type: 3}
+  sprHealLarge: {fileID: 0}
+  sprLevelChange: {fileID: 0}
+  levelName: Debug_Level
+  pointValue: 0

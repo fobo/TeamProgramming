@@ -47,7 +47,7 @@ public class Boost : MonoBehaviour
                 
                 Vector3 projection = magInBoostDir * rbVnorm;
                 Vector3 clampedProjection = Vector3.ClampMagnitude(projection, boostMaxMagnitude);
-                Debug.Log(magInBoostDir); //50 on add force == 1 vel magnitude
+                //Debug.Log(magInBoostDir); //50 on add force == 1 vel magnitude
 
                 if(magInBoostDir >= boostMaxMagnitude)
                 {
