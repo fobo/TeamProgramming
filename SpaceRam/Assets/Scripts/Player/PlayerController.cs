@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         Status theirStatus = other.GetComponent<Status>();
         Rigidbody2D col_rb = other.GetComponent<Rigidbody2D>();
-        float myMagnitude = rb.velocity.magnitude;
+        float myMagnitude = prevVelocity.magnitude;
 
 
         if (other.tag == "Projectile" /*&& myStatus.projInvincibilityTime <= 0*/)
