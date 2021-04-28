@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float maxDashPower = 500; //50 == 1 magnitude
     float storedDashPower = 0;
     float bonkTimer = 0.5f;
+    Vector3 prevVelocity = Vector3.zero;
 
 
     Animator anim;
@@ -40,22 +41,22 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Bounce();
+        Debug.Log(collision.relativeVelocity);
+        CollisionCode(collision.gameObject);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void CollisionCode(GameObject other)
     {
-
         //Debug.Log("My Magnitude: "+rb.velocity.magnitude);
 
-        
 
-        Status theirStatus = col.gameObject.GetComponent<Status>();
-        Rigidbody2D col_rb = col.gameObject.GetComponent<Rigidbody2D>();
+
+        Status theirStatus = other.GetComponent<Status>();
+        Rigidbody2D col_rb = other.GetComponent<Rigidbody2D>();
         float myMagnitude = rb.velocity.magnitude;
 
 
-        if (col.gameObject.tag == "Projectile" /*&& myStatus.projInvincibilityTime <= 0*/)
+        if (other.tag == "Projectile" /*&& myStatus.projInvincibilityTime <= 0*/)
         {
             SoundManagerScript.PlaySound("shipHitSound");
             float damage = theirStatus.damage;
@@ -70,11 +71,11 @@ public class PlayerController : MonoBehaviour
         {
             float theirHP = theirStatus.hp;
             float theirDamage = myMagnitude; //last var makes it so only half your hp is doing damage
-            float myDamage = myMagnitude/10; //last variable makes it so enemies only use a fraction of their hp to damage
+            float myDamage = myMagnitude / 10; //last variable makes it so enemies only use a fraction of their hp to damage
             //Debug.Log("My Damage: " + myDamage);
-            float killBonus =  0; //reduces damage if enemy dies
+            float killBonus = 0; //reduces damage if enemy dies
 
-            if (col.gameObject.tag == "Enemy")
+            if (other.tag == "Enemy")
             {
 
                 if (theirDamage >= theirHP) //they got killed
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
                     //cronch sound
                     SoundManagerScript.PlaySound("shipKillEnemySound");
                     gameManager.UpdateScore(10);
+                    rb.velocity = prevVelocity;
                     killBonus = 0.5f; //take half damage if they get killed
                     theirStatus.hp = 0;
                     //Destroy(col.gameObject);
@@ -97,11 +99,18 @@ public class PlayerController : MonoBehaviour
                     myStatus.invincibilityTime = 0.5f; //Gain 1 second of invicibility on bonks so you don't get chain bonked
                 }
 
-                myStatus.hp -= myDamage - myDamage*killBonus; //Always take damage
+                myStatus.hp -= myDamage - myDamage * killBonus; //Always take damage
 
 
             }
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        CollisionCode(col.gameObject);
+
+
     }
 
 
@@ -192,10 +201,14 @@ public class PlayerController : MonoBehaviour
         //}
     }
 
+    private void FixedUpdate()
+    {
+        prevVelocity = rb.velocity;
+    }
     //void Bounce() {
     //    float curZ = transform.rotation.eulerAngles.z;
     //    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, curZ + (270 - curZ) * 2); //270 because 360/0 is vertical and 270 is horizontal
-        
+
 
     //}
 
