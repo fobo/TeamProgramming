@@ -41,12 +41,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.relativeVelocity);
+        
         CollisionCode(collision.gameObject);
     }
 
     void CollisionCode(GameObject other)
     {
+        //Debug.Log("My Previous: " + prevVelocity.magnitude);
         //Debug.Log("My Magnitude: "+rb.velocity.magnitude);
 
 

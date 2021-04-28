@@ -23,7 +23,8 @@ public class GlobalCustom : MonoBehaviour
         {
             if (target.Equals(me)) continue;
 
-            float currentDistance = Vector3.Distance(target.transform.position, me.transform.position);
+            float currentDistance = Vector2.Distance((Vector2)target.transform.position, (Vector2)me.transform.position);
+            Debug.Log(currentDistance);
 
             if (range > 0)
             {
@@ -41,7 +42,7 @@ public class GlobalCustom : MonoBehaviour
             {
                 closest = target;
             } 
-            else if (currentDistance < Vector3.Distance(closest.transform.position, me.transform.position))
+            else if (currentDistance < Vector2.Distance((Vector2)closest.transform.position, (Vector2)me.transform.position))
             {
                 closest = target;
             }
