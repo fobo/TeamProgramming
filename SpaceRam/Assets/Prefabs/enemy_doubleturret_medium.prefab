@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d89e822c7e8646a49a2e90d86f7bb578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTag: Player
   patternType: 0
   moveType: 1
   moveSpeed: 5
@@ -131,9 +132,14 @@ MonoBehaviour:
   approachRange: 4
   detectRange: 6
   socialDistanceSpeed: 3
-  deathPoop: {fileID: 0}
+  deathPoop: {fileID: 1768921350277307280, guid: 6ee85a4f3fc726245ad0ec3863865767, type: 3}
   instantDieOnContact: 0
   home: {x: 0, y: 0, z: 0}
+  socialDistanceTagsArray:
+  - Enemy
+  contactTagsArray:
+  - Wall
+  - Player
   patrolRoute: []
 --- !u!114 &5146223900550244948
 MonoBehaviour:

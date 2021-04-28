@@ -58,7 +58,7 @@ MonoBehaviour:
   approachRange: 3
   detectRange: 6
   socialDistanceSpeed: 3
-  deathPoop: {fileID: 0}
+  deathPoop: {fileID: 1768921350277307280, guid: 6489ba98d5052e946b6bd5c8a9eb179c, type: 3}
   instantDieOnContact: 0
   home: {x: 0, y: 0, z: 0}
   socialDistanceTagsArray:

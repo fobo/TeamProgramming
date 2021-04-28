@@ -196,7 +196,8 @@ public class MovementPatternController : MonoBehaviour
         //Debug.Log(deathPoop);
         if (deathPoop != null)
         {
-            Instantiate(deathPoop, (Vector2)transform.position, new Quaternion(0, 0, 0, 0));
+            GameObject debri = Instantiate(deathPoop, (Vector2)transform.position, new Quaternion(0, 0, 0, 0));
+            debri.transform.localScale = transform.localScale;
         }
         Destroy(gameObject);
     }
