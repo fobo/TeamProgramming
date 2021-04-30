@@ -22,11 +22,15 @@ public class Status : MonoBehaviour
 
     void resolveRegens()
     {
-        hp += hp_regen * Time.deltaTime;
 
-        if (hp > max_hp)
-        {
-            hp = max_hp;
+        //No regen if your hp is less than or equal to 0
+        if (hp >= 0) { 
+            hp += hp_regen * Time.deltaTime;
+
+            if (hp > max_hp)
+            {
+                hp = max_hp;
+            }
         }
     }
 
