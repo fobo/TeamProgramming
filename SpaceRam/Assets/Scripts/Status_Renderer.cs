@@ -52,7 +52,14 @@ public class Status_Renderer : MonoBehaviour
 
         float percentage_hp = host_hp / host_max_hp;
         hp_child.transform.localScale = new Vector3(default_hp_x_scale * percentage_hp, hp_child.transform.localScale.y, hp_child.transform.localScale.z);
-        text_renderer.text = Mathf.Round(host_hp).ToString() + " / " + host_max_hp.ToString();
+        if(host_hp < 1)
+        {
+            text_renderer.text = (Mathf.Round(host_hp*10)/10).ToString() + " / " + host_max_hp.ToString();
+        } else
+        {
+            text_renderer.text = Mathf.Round(host_hp).ToString() + " / " + host_max_hp.ToString();
+        }
+        
     }
 
     private void OnDrawGizmos()
