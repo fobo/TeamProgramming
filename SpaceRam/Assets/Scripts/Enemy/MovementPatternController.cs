@@ -274,7 +274,7 @@ public class MovementPatternController : MonoBehaviour
         {
             currentWaypointIndex = 0;
         }
-
+        if (patrolRoute[currentWaypointIndex] == null) return;
         MoveTowards(patrolRoute[currentWaypointIndex].transform.position);
     }
 

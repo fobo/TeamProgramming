@@ -24,7 +24,7 @@ public class GlobalCustom : MonoBehaviour
             if (target.Equals(me)) continue;
 
             float currentDistance = Vector2.Distance((Vector2)target.transform.position, (Vector2)me.transform.position);
-            Debug.Log(currentDistance);
+            //Debug.Log(currentDistance);
 
             if (range > 0)
             {
