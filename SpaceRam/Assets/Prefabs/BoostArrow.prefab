@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boostAmt: 20
+  boostMaxMagnitude: -1
+  effectsTagsArr:
+  - Player
 --- !u!212 &4528433891888237386
 SpriteRenderer:
   m_ObjectHideFlags: 0
