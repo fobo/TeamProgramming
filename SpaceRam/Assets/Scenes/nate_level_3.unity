@@ -2029,7 +2029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1659049357222362452, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
       propertyPath: hp_regen
-      value: 0.75
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4137803063491501371, guid: 992f086a60d865547a166fdca86d1d61, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6594,7 +6594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1659049357222362452, guid: 5212534ca9bbd174b830a2c39a5f8676, type: 3}
       propertyPath: hp_regen
-      value: 2
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 1659049357222362452, guid: 5212534ca9bbd174b830a2c39a5f8676, type: 3}
       propertyPath: damage
