@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/brett_level_0.unity
     guid: 40c38620b2abe4a26befeee3678985d1
+  - enabled: 1
+    path: Assets/Scenes/Brandon_Level_1.unity
+    guid: 7d674929d4f1e9f45b1cc85f88ef612a
   m_configObjects: {}

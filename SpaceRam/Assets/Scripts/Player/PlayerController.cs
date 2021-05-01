@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
                     col_rb.velocity = rb.velocity / 4;
                     rb.velocity = (col_rb.velocity.normalized * -1);
                     theirStatus.stunTime = bonkTimer;
-                    myStatus.invincibilityTime = 0.5f; //Gain 1 second of invicibility on bonks so you don't get chain bonked
+                    myStatus.invincibilityTime = 0.5f; //Gain invicibility on bonks so you don't get chain bonked
                 }
 
                 myStatus.hp -= myDamage - myDamage * killBonus; //Always take damage

@@ -3020,13 +3020,17 @@ PrefabInstance:
       propertyPath: levels.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4472648804776598569, guid: 2ec33bd71ae6b634ba3fb537ca6da4e7, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4472648804776598570, guid: 2ec33bd71ae6b634ba3fb537ca6da4e7, type: 3}
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 4472648804776598742, guid: 2ec33bd71ae6b634ba3fb537ca6da4e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13
+      value: -9
       objectReference: {fileID: 0}
     - target: {fileID: 4472648804776598742, guid: 2ec33bd71ae6b634ba3fb537ca6da4e7, type: 3}
       propertyPath: m_LocalPosition.y
