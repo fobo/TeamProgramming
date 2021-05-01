@@ -8,7 +8,7 @@ public class Boost : MonoBehaviour
     public float boostAmt = 0; //50 to 1 magnitude a frame
     public float boostMaxMagnitude = -1;
     private List<GameObject> gameObjectsArr = new List<GameObject>();
-    private bool playerIsColliding = false;
+    //private bool playerIsColliding = false;
     public string[] effectsTagsArr = {"Player"};
     private List<string> effectsTags = new List<string>();
     private void Start()

@@ -6,7 +6,7 @@ public class PatrolWaypoint : MonoBehaviour
 {
     //This class may be used later for customizing behavior 
     //between points (such as changing an object to approach mode)
-    float maximumApproachTime = -1; //Used to determine how long before an object gives up on approaching this waypoint
+    //float maximumApproachTime = -1; //Used to determine how long before an object gives up on approaching this waypoint
     public enum Behavior
     {
         CONTINUE,
