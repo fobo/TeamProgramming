@@ -975,6 +975,10 @@ PrefabInstance:
       propertyPath: type
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8869335248387571282, guid: 9420e00e55bfbee419fae0cebd84f8bd, type: 3}
+      propertyPath: levelName
+      value: Hublevel
+      objectReference: {fileID: 0}
     - target: {fileID: 8869335248387571309, guid: 9420e00e55bfbee419fae0cebd84f8bd, type: 3}
       propertyPath: m_RootOrder
       value: 1
